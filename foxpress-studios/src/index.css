@@ -1,0 +1,173 @@
+@import '@fontsource/cinzel/400.css';
+@import '@fontsource/cinzel/600.css';
+@import '@fontsource/cinzel/700.css';
+@import '@fontsource/inter/300.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+
+@font-face {
+  font-family: 'Cinzel';
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --gold: #C9A227;
+  --gold-light: #E8B84B;
+  --gold-dark: #A67C1A;
+  --black: #0A0A0A;
+  --surface: #1A1A1A;
+  --surface2: #111111;
+  --surface3: #222222;
+  --cream: #F5F5F0;
+  --muted: #9A9A90;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    min-width: 320px;
+    overflow-x: hidden;
+    background-color: var(--black);
+    color: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--cream);
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background-color: var(--gold);
+    color: var(--black);
+  }
+}
+
+@layer components {
+  .btn-gold {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-gold text-black font-semibold text-sm tracking-widest uppercase transition-all duration-300;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .btn-gold:hover {
+    @apply bg-gold-light shadow-gold;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 px-6 py-3 border border-cream/40 text-cream font-semibold text-sm tracking-widest uppercase transition-all duration-300;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .btn-ghost:hover {
+    @apply border-gold text-gold;
+  }
+
+  .section-eyebrow {
+    @apply text-gold text-xs font-semibold tracking-[0.25em] uppercase mb-3;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-cream;
+    font-family: 'Cinzel', serif;
+  }
+
+  .gold-divider {
+    @apply w-12 h-[2px] bg-gold my-4;
+  }
+
+  .card-dark {
+    @apply bg-surface border border-white/5 transition-all duration-300;
+  }
+
+  .card-dark:hover {
+    @apply border-gold/30 shadow-card;
+  }
+}
+
+@layer utilities {
+  .text-gold {
+    color: var(--gold);
+  }
+
+  .bg-hero-overlay {
+    background: linear-gradient(to right, rgba(10, 10, 10, 0.98) 100%);
+  }
+  @media (min-width: 768px) {
+    .bg-hero-overlay {
+      background: linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 30%, transparent 65%);
+    }
+  }
+
+  .tracking-hero {
+    letter-spacing: 0.25em;
+  }
+
+  .text-hero {
+    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl;
+  }
+  .section-title {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+  .section-eyebrow {
+    @apply text-[10px] md:text-xs tracking-[0.2em] md:tracking-[0.25em];
+  }
+  .section-padding {
+    @apply py-16 md:py-20 lg:py-24 px-6 md:px-8;
+  }
+  .container-width {
+    @apply w-full mx-auto px-6 md:px-16 lg:px-24 xl:px-32;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

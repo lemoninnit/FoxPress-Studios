@@ -1,0 +1,1 @@
+export default function AwardBadge() { return <div></div>; }
