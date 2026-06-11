@@ -37,5 +37,5 @@ The application will be running locally at [http://localhost:5173](http://localh
 Deployed in Vercel
 
 ```link
-[https://fox-press-studios.vercel.app]
+[https://fox-press-studios.vercel.app](https://fox-press-studios.vercel.app)
 ```

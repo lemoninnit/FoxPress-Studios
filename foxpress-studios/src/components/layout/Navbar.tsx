@@ -15,7 +15,7 @@ import { LiquidButton } from '../ui/liquid-glass-button'
 
 function TopBar() {
   return (
-    <div className="bg-white/[0.005] backdrop-blur-[2px] border-b border-white/5 hidden lg:block shadow-[inset_0_-1px_0_rgba(255,255,255,0.02)]">
+    <div className="bg-white/[0.005] backdrop-blur-[2px] border-b border-white/5 hidden md:block shadow-[inset_0_-1px_0_rgba(255,255,255,0.02)]">
       <div className="container-width py-3.5 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2 text-cream text-[13px]">
@@ -168,32 +168,32 @@ export default function Navbar({ onContactClick }: NavbarProps) {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 hidden lg:block ${isScrolled ? 'bg-transparent backdrop-blur-[2px] border-b border-white/5 shadow-none' : 'bg-transparent'}`}
+        className={`fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 hidden md:block ${isScrolled ? 'bg-transparent backdrop-blur-[2px] border-b border-white/5 shadow-none' : 'bg-transparent'}`}
       >
         {!isScrolled && <TopBar />}
-        <nav className="container-width flex items-center justify-between h-20">
+        <nav className="container-width flex items-center justify-between h-20 animate-fade-in">
           {/* Left: Logo */}
           <div className="flex-1 flex justify-start">
             <Link to="/" onClick={(e) => {
               e.preventDefault();
               navigateHome();
-            }} className="flex items-center gap-3">
-              <img src={logoImg} alt="Foxpress Logo" className="w-8 h-8 object-contain" />
+            }} className="flex items-center gap-2 lg:gap-3">
+              <img src={logoImg} alt="Foxpress Logo" className="w-7 h-7 lg:w-8 lg:h-8 object-contain" />
               <div className="flex flex-col text-left">
-                <span className="font-display font-bold text-cream text-base md:text-lg leading-none tracking-widest">FOXPRESS</span>
-                <span className="font-display font-bold text-cream text-[10px] md:text-xs leading-none tracking-[0.3em] mt-1">STUDIOS</span>
+                <span className="font-display font-bold text-cream text-sm lg:text-lg leading-none tracking-widest">FOXPRESS</span>
+                <span className="font-display font-bold text-cream text-[9px] lg:text-xs leading-none tracking-[0.3em] mt-1">STUDIOS</span>
               </div>
             </Link>
           </div>
           
           {/* Center: Navigation Links */}
-          <div className="flex items-center justify-center gap-8">
+          <div className="flex items-center justify-center gap-3 lg:gap-5 xl:gap-8">
             {navLinksToRender.map((link) => (
               <Link
                 key={link.label}
                 to={link.href}
                 onClick={(e) => handleLinkClick(e, link.href, link.label)}
-                className={`text-xs tracking-widest uppercase font-medium transition-colors ${activeLink === link.label ? 'text-gold' : 'text-cream/80 hover:text-gold'}`}
+                className={`text-[10px] lg:text-xs tracking-wider lg:tracking-widest uppercase font-medium transition-colors ${activeLink === link.label ? 'text-gold' : 'text-cream/80 hover:text-gold'}`}
               >
                 {link.label}
               </Link>
@@ -202,10 +202,10 @@ export default function Navbar({ onContactClick }: NavbarProps) {
 
           {/* Right: CTA Button */}
           <div className="flex-1 flex justify-end items-center gap-4">
-            <div className="hidden lg:block">
+            <div className="hidden md:block">
               <LiquidButton 
                 onClick={onContactClick}
-                className="border border-gold/45 text-gold text-xs tracking-widest uppercase px-6 py-3 bg-gold/15 backdrop-blur-md shadow-[0_8px_32px_0_rgba(201,162,39,0.1),inset_0_1px_1px_rgba(255,255,255,0.25)] hover:scale-[1.03] hover:brightness-115 hover:shadow-[0_0_25px_rgba(201,162,39,0.35)] transition-all duration-500 ease-out !h-auto !py-3 !rounded-sm"
+                className="border border-gold/45 text-gold text-[10px] lg:text-xs tracking-wider lg:tracking-widest uppercase px-4 lg:px-6 py-2.5 lg:py-3 bg-gold/15 backdrop-blur-md shadow-[0_8px_32px_0_rgba(201,162,39,0.1),inset_0_1px_1px_rgba(255,255,255,0.25)] hover:scale-[1.03] hover:brightness-115 hover:shadow-[0_0_25px_rgba(201,162,39,0.35)] transition-all duration-500 ease-out !h-auto !rounded-sm"
               >
                 CONTACT US
               </LiquidButton>
@@ -224,7 +224,7 @@ export default function Navbar({ onContactClick }: NavbarProps) {
         buttonBgColor="#c9a227"
         buttonTextColor="#000000"
         onCtaClick={onContactClick}
-        className="lg:hidden"
+        className="md:hidden"
       />
     </>
   )
