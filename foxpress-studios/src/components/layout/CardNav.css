@@ -183,10 +183,28 @@
   transform: translate(2px, -2px);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   .card-nav-container {
-    width: 90%;
-    top: 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    transform: none;
+    z-index: 100;
+  }
+
+  .card-nav {
+    border-radius: 0;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+    height: 60px;
+    background-color: rgba(8, 8, 8, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
   .card-nav-top {

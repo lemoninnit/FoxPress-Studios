@@ -31,3 +31,11 @@ npm run dev
 ```
 
 The application will be running locally at [http://localhost:5173](http://localhost:5173).
+
+### 3. Deployment 
+
+Deployed in Vercel
+
+```link
+https://fox-press-studios.vercel.app/
+```
