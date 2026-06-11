@@ -2,9 +2,9 @@ import type { NavLink, Stat, Service, Testimonial, NewsPost, TeamMember, Award, 
 
 export const NAV_LINKS: NavLink[] = [
   { label: "Home", href: "/" },
-  { label: "About Us", href: "/#about" },
   { label: "Services", href: "/#services" },
   { label: "Our Work", href: "/#work" },
+  { label: "About Us", href: "/#about" },
   { label: "Awards", href: "/#awards" },
   { label: "News", href: "/#news" },
   { label: "Contact Us", href: "#contact" }

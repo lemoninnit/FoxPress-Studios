@@ -52,16 +52,39 @@ export default function Navbar({ onContactClick }: NavbarProps) {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const scrollToSection = (targetId: string) => {
+    const element = document.getElementById(targetId);
+    if (!element) return false;
+
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.history.pushState(null, '', '#' + targetId);
+    return true;
+  };
+
+  const navigateHome = () => {
+    setActiveLink("Home");
+
+    if (window.location.pathname !== '/') {
+      navigate('/');
+    } else if (window.location.hash) {
+      window.history.pushState(null, '', '/');
+    }
+
+    window.requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  };
+
   useEffect(() => {
     const path = location.pathname;
     if (path === '/') {
       const hash = location.hash;
-      if (hash === '#about') {
-        setActiveLink("About Us");
-      } else if (hash === '#services') {
+      if (hash === '#services') {
         setActiveLink("Services");
       } else if (hash === '#work') {
         setActiveLink("Our Work");
+      } else if (hash === '#about') {
+        setActiveLink("About Us");
       } else if (hash === '#awards') {
         setActiveLink("Awards");
       } else if (hash === '#news') {
@@ -81,6 +104,12 @@ export default function Navbar({ onContactClick }: NavbarProps) {
       return;
     }
 
+    if (label === "Home") {
+      e.preventDefault();
+      navigateHome();
+      return;
+    }
+
     const hasHash = href.includes('#');
     if (hasHash) {
       e.preventDefault();
@@ -91,11 +120,7 @@ export default function Navbar({ onContactClick }: NavbarProps) {
       if (location.pathname !== path) {
         navigate(href);
       } else {
-        const element = document.getElementById(targetId);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-          window.history.pushState(null, '', '#' + targetId);
-        }
+        scrollToSection(targetId);
       }
       setActiveLink(label);
       return;
@@ -116,7 +141,10 @@ export default function Navbar({ onContactClick }: NavbarProps) {
       <nav className="container-width flex items-center justify-between h-20">
         {/* Left: Logo */}
         <div className="flex-1 flex justify-start">
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/" onClick={(e) => {
+            e.preventDefault();
+            navigateHome();
+          }} className="flex items-center gap-3">
             <img src={logoImg} alt="Foxpress Logo" className="w-8 h-8 object-contain" />
             <div className="flex flex-col text-left">
               <span className="font-display font-bold text-cream text-base md:text-lg leading-none tracking-widest">FOXPRESS</span>

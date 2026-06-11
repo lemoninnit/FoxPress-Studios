@@ -21,7 +21,7 @@ export default function Stats() {
   const { ref, inView } = useInView({ threshold: 0.2 })
 
   return (
-    <section id="about" ref={ref} className="w-full bg-black/35 backdrop-blur-md border-y border-white/10 py-8 md:py-10 relative z-10 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_4px_30px_rgba(0,0,0,0.2)]">
+    <section id="stats" ref={ref} className="w-full bg-black/35 backdrop-blur-md border-y border-white/10 py-8 md:py-10 relative z-10 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_4px_30px_rgba(0,0,0,0.2)]">
       <div className="container-width">
         <m.div 
           variants={staggerContainer}

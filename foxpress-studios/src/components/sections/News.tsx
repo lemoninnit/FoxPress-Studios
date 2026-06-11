@@ -3,6 +3,8 @@ import { m, AnimatePresence } from 'framer-motion'
 import { NEWS } from '../../constants'
 import * as Icons from 'lucide-react'
 import { LiquidButton } from '../ui/liquid-glass-button'
+import ShapeGrid from '../ui/ShapeGrid'
+import BorderGlow from '../ui/BorderGlow'
 
 export default function News() {
   const [selectedPost, setSelectedPost] = useState<typeof NEWS[number] | null>(null)
@@ -20,7 +22,20 @@ export default function News() {
   }, [selectedPost])
 
   return (
-    <section id="news" className="w-full bg-black py-20 relative overflow-hidden border-t border-white/5 scroll-mt-20">
+    <section id="news" className="w-full bg-black section-padding relative overflow-hidden border-t border-white/5 scroll-mt-20">
+      {/* Background ShapeGrid */}
+      <div className="absolute inset-0 pointer-events-none opacity-20 z-0">
+        <ShapeGrid
+          speed={0.5}
+          squareSize={40}
+          direction='diagonal'
+          borderColor='rgba(201, 162, 39, 0.15)'
+          hoverFillColor='rgba(201, 162, 39, 0.25)'
+          shape='square'
+          hoverTrailAmount={5}
+        />
+      </div>
+
       <div className="container-width text-center relative z-10">
         <p className="section-eyebrow text-gold mb-4">UPDATES</p>
         <h2 className="section-title mb-6">STUDIO NEWS</h2>
@@ -36,24 +51,39 @@ export default function News() {
               viewport={{ once: true }}
               whileHover={{ y: -6 }}
               onClick={() => setSelectedPost(post)}
-              className="group relative rounded-sm border border-white/10 bg-black/40 p-6 md:p-8 transition-all duration-300 hover:border-gold/40 hover:shadow-[0_8px_30px_rgb(201,162,39,0.04)] cursor-pointer flex flex-col justify-between"
+              className="group cursor-pointer"
             >
-              <div>
-                <div className="flex items-center gap-2 text-gold text-[10px] tracking-wider uppercase font-semibold mb-4">
-                  <Icons.Calendar size={12} />
-                  <span>{post.date}</span>
+              <BorderGlow
+                edgeSensitivity={30}
+                glowColor="45 80% 50%"
+                backgroundColor="#0a0a0a"
+                borderRadius={2}
+                glowRadius={40}
+                glowIntensity={1.0}
+                coneSpread={25}
+                animated={false}
+                colors={['#c9a227', '#e5c043', '#8e6d12']}
+                className="w-full h-full border-0"
+              >
+                <div className="p-6 md:p-8 flex flex-col justify-between h-full min-h-[220px]">
+                  <div>
+                    <div className="flex items-center gap-2 text-gold text-[10px] tracking-wider uppercase font-semibold mb-4">
+                      <Icons.Calendar size={12} />
+                      <span>{post.date}</span>
+                    </div>
+                    <h3 className="font-display font-bold text-cream text-lg md:text-xl uppercase tracking-wide group-hover:text-gold transition-colors leading-snug">
+                      {post.title}
+                    </h3>
+                    <p className="text-cream/50 text-xs md:text-sm leading-relaxed mt-4 line-clamp-3">
+                      {post.summary}
+                    </p>
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-white/5 flex items-center text-gold text-xs tracking-widest uppercase font-semibold group-hover:text-gold-light transition-colors gap-2">
+                    <span>READ FULL ARTICLE</span>
+                    <Icons.ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  </div>
                 </div>
-                <h3 className="font-display font-bold text-cream text-lg md:text-xl uppercase tracking-wide group-hover:text-gold transition-colors leading-snug">
-                  {post.title}
-                </h3>
-                <p className="text-cream/50 text-xs md:text-sm leading-relaxed mt-4 line-clamp-3">
-                  {post.summary}
-                </p>
-              </div>
-              <div className="mt-6 pt-4 border-t border-white/5 flex items-center text-gold text-xs tracking-widest uppercase font-semibold group-hover:text-gold-light transition-colors gap-2">
-                <span>READ FULL ARTICLE</span>
-                <Icons.ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-              </div>
+              </BorderGlow>
             </m.div>
           ))}
         </div>

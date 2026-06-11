@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { m, AnimatePresence } from 'framer-motion'
 import { Mail, MapPin, Phone, ChevronUp } from 'lucide-react'
 import { NAV_LINKS, SERVICES } from '../../constants'
@@ -12,9 +12,64 @@ const Youtube = ({ size = 24 }: { size?: number }) => <svg xmlns="http://www.w3.
 
 export default function Footer() {
   const scrollY = useScrollY()
+  const location = useLocation()
+  const navigate = useNavigate()
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const scrollToSection = (targetId: string) => {
+    const element = document.getElementById(targetId)
+    if (!element) return false
+
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    window.history.pushState(null, '', '#' + targetId)
+    return true
+  }
+
+  const navigateHome = () => {
+    if (window.location.pathname !== '/') {
+      navigate('/')
+    } else if (window.location.hash) {
+      window.history.pushState(null, '', '/')
+    }
+
+    window.requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    })
+  }
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, label: string) => {
+    if (label === "Home") {
+      e.preventDefault()
+      navigateHome()
+      return
+    }
+
+    const hasHash = href.includes('#')
+    if (hasHash) {
+      e.preventDefault()
+      const parts = href.split('#')
+      const path = parts[0] || '/'
+      const targetId = parts[1]
+
+      if (location.pathname !== path) {
+        navigate(href)
+      } else {
+        scrollToSection(targetId)
+      }
+      return
+    }
+  }
+
+  const handleServiceClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    if (location.pathname !== '/') {
+      navigate('/#services')
+    } else {
+      scrollToSection('services')
+    }
   }
 
   const containerClasses = "container-width"
@@ -26,11 +81,11 @@ export default function Footer() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
         viewport={{ once: true }}
-        className="w-full bg-surface2 border-t border-gold/20"
+        className="w-full bg-black/55 backdrop-blur-md border-t border-gold/20 shadow-[0_-10px_30px_rgba(0,0,0,0.3)] relative z-10"
       >
         {/* Row 1 — Brand block */}
-        <div className={`${containerClasses} pt-12 md:pt-16 pb-10`}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+        <div className={`${containerClasses} pt-10 pb-4`}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             {/* Column 1 */}
             <m.div 
               initial={{ opacity: 0, y: 20 }}
@@ -46,10 +101,10 @@ export default function Footer() {
                   <span className="font-display font-bold text-cream text-xs leading-none tracking-[0.3em] mt-1">STUDIOS</span>
                 </div>
               </Link>
-              <p className="text-muted text-sm leading-relaxed mt-4 max-w-xs mx-0">
+              <p className="text-muted text-sm leading-relaxed mt-2 max-w-xs mx-0">
                 Elevating stories. Inspiring the world.
               </p>
-              <div className="flex gap-3 mt-6 justify-start">
+              <div className="flex gap-3 mt-4 justify-start">
                 <a href="#" className="w-11 h-11 md:w-9 md:h-9 rounded-full border border-white/10 flex items-center justify-center text-muted hover:border-gold hover:text-gold transition-all duration-300">
                   <Facebook size={16} />
                 </a>
@@ -73,11 +128,15 @@ export default function Footer() {
               viewport={{ once: true }}
               className="text-center"
             >
-              <h4 className="text-cream text-xs tracking-[0.2em] uppercase font-semibold mb-5">QUICK LINKS</h4>
-              <ul>
+              <h4 className="text-cream text-xs tracking-[0.2em] uppercase font-semibold mb-3">QUICK LINKS</h4>
+              <ul className="space-y-0.5">
                 {NAV_LINKS.filter(link => link.label !== "Contact Us").map(link => (
                   <li key={link.label}>
-                    <Link to={link.href} className="text-muted text-sm hover:text-gold transition-colors duration-200 block py-1 text-center">
+                    <Link
+                      to={link.href}
+                      onClick={(e) => handleLinkClick(e, link.href, link.label)}
+                      className="text-muted text-sm hover:text-gold transition-colors duration-200 block py-0.5 text-center"
+                    >
                       {link.label}
                     </Link>
                   </li>
@@ -93,11 +152,15 @@ export default function Footer() {
               viewport={{ once: true }}
               className="text-center md:text-right"
             >
-              <h4 className="text-cream text-xs tracking-[0.2em] uppercase font-semibold mb-5">OUR SERVICES</h4>
-              <ul>
+              <h4 className="text-cream text-xs tracking-[0.2em] uppercase font-semibold mb-3">OUR SERVICES</h4>
+              <ul className="space-y-0.5">
                 {SERVICES.map(service => (
                   <li key={service.title}>
-                    <Link to="/services" className="text-muted text-sm hover:text-gold transition-colors duration-200 block py-1 text-center md:text-right">
+                    <Link
+                      to="/#services"
+                      onClick={handleServiceClick}
+                      className="text-muted text-sm hover:text-gold hover:drop-shadow-[0_0_12px_rgba(201,162,39,0.95)] hover:[text-shadow:0_0_8px_rgba(201,162,39,0.85)] transition-all duration-300 block py-0.5 text-center md:text-right cursor-pointer"
+                    >
                       {service.title}
                     </Link>
                   </li>
@@ -108,8 +171,8 @@ export default function Footer() {
         </div>
 
         {/* Row 2 — Contact info block */}
-        <div className={`${containerClasses} pb-10`}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+        <div className={`${containerClasses} pb-6`}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             <m.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -155,8 +218,8 @@ export default function Footer() {
         <div className="border-t border-white/10 w-full"></div>
 
         {/* Row 4 — Copyright bar */}
-        <div className={`${containerClasses} py-6`}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 text-center">
+        <div className={`${containerClasses} py-4`}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 text-center">
             <div className="text-left">
               <p className="text-muted text-xs">© 2026 Foxpress Studios. All rights reserved.</p>
             </div>

@@ -15,6 +15,30 @@ interface BorderGlowProps {
   animated?: boolean;
   colors?: string[];
   fillOpacity?: number;
+  cutCorner?: 'top-right' | 'bottom-left' | 'top-left' | 'bottom-right' | 'diagonal-1' | 'diagonal-2' | 'all' | 'none';
+}
+
+function getClipPath(cutCorner?: BorderGlowProps['cutCorner']) {
+  if (!cutCorner || cutCorner === 'none') return undefined;
+  const size = '32px';
+  switch (cutCorner) {
+    case 'top-right':
+      return `polygon(0% 0%, calc(100% - ${size}) 0%, 100% ${size}, 100% 100%, 0% 100%)`;
+    case 'bottom-left':
+      return `polygon(0% 0%, 100% 0%, 100% 100%, ${size} 100%, 0% calc(100% - ${size}))`;
+    case 'top-left':
+      return `polygon(${size} 0%, 100% 0%, 100% 100%, 0% 100%, 0% ${size})`;
+    case 'bottom-right':
+      return `polygon(0% 0%, 100% 0%, 100% calc(100% - ${size}), calc(100% - ${size}) 100%, 0% 100%)`;
+    case 'diagonal-1': // top-left & bottom-right
+      return `polygon(${size} 0%, 100% 0%, 100% calc(100% - ${size}), calc(100% - ${size}) 100%, 0% 100%, 0% ${size})`;
+    case 'diagonal-2': // top-right & bottom-left
+      return `polygon(0% 0%, calc(100% - ${size}) 0%, 100% ${size}, 100% 100%, ${size} 100%, 0% calc(100% - ${size}))`;
+    case 'all':
+      return `polygon(${size} 0%, calc(100% - ${size}) 0%, 100% ${size}, 100% calc(100% - ${size}), calc(100% - ${size}) 100%, ${size} 100%, 0% calc(100% - ${size}), 0% ${size})`;
+    default:
+      return undefined;
+  }
 }
 
 function parseHSL(hslStr: string) {
@@ -87,6 +111,7 @@ export default function BorderGlow({
   animated = false,
   colors = ['#c9a227', '#e5c043', '#8e6d12'],
   fillOpacity = 0.3,
+  cutCorner = 'none',
 }: BorderGlowProps) {
   const cardRef = useRef<HTMLDivElement | null>(null);
 
@@ -154,6 +179,7 @@ export default function BorderGlow({
   }, [animated]);
 
   const glowVars = buildGlowVars(glowColor, glowIntensity);
+  const clipPathVal = getClipPath(cutCorner);
 
   return (
     <div
@@ -163,10 +189,12 @@ export default function BorderGlow({
       style={{
         '--card-bg': backgroundColor,
         '--edge-sensitivity': edgeSensitivity,
-        '--border-radius': `${borderRadius}px`,
+        '--border-radius': cutCorner && cutCorner !== 'none' ? '0px' : `${borderRadius}px`,
         '--glow-padding': `${glowRadius}px`,
         '--cone-spread': coneSpread,
         '--fill-opacity': fillOpacity,
+        clipPath: clipPathVal,
+        WebkitClipPath: clipPathVal,
         ...glowVars,
         ...buildGradientVars(colors),
       } as React.CSSProperties}

@@ -56,14 +56,24 @@ function App() {
   useEffect(() => {
     if (hash) {
       const id = hash.replace('#', '')
-      const element = document.getElementById(id)
-      if (element) {
-        // slight delay to wait for lazy layout rendering
-        const timer = setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth' })
-        }, 180)
-        return () => clearTimeout(timer)
+      let attempts = 0
+      let timer: number
+
+      const scrollToHash = () => {
+        const element = document.getElementById(id)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          return
+        }
+
+        attempts += 1
+        if (attempts < 12) {
+          timer = window.setTimeout(scrollToHash, 100)
+        }
       }
+
+      timer = window.setTimeout(scrollToHash, 180)
+      return () => window.clearTimeout(timer)
     }
   }, [pathname, hash])
 

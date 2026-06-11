@@ -1,10 +1,11 @@
+import { useState } from 'react'
 import { m } from 'framer-motion'
-import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { PROJECTS } from '../../constants'
 import { LiquidButton } from '../ui/liquid-glass-button'
 import ShapeGrid from '../ui/ShapeGrid'
 import BorderGlow from '../ui/BorderGlow'
+import ProjectModal from './ProjectModal'
 
 import whiteDragon from '../../assets/dragon-white.jpg'
 import blueDragon from '../../assets/dragon-blue.jpg'
@@ -19,6 +20,14 @@ const PROJECT_IMAGES = [
 ]
 
 export default function OurWork() {
+  const [projectModalOpen, setProjectModalOpen] = useState(false)
+  const [selectedProjectIndex, setSelectedProjectIndex] = useState(0)
+
+  const handleOpenProject = (index: number) => {
+    setSelectedProjectIndex(index)
+    setProjectModalOpen(true)
+  }
+
   return (
     <section id="work" className="w-full bg-surface2 section-padding overflow-hidden relative">
       {/* Background ShapeGrid */}
@@ -58,11 +67,12 @@ export default function OurWork() {
             transition={{ duration: 0.7 }}
             viewport={{ once: true }}
           >
-            <Link to="/work">
-              <LiquidButton className="border border-white/20 text-cream text-xs tracking-widest uppercase px-6 py-3 bg-white/5 backdrop-blur-md shadow-[0_8px_32px_0_rgba(255,255,255,0.05),inset_0_1px_1px_rgba(255,255,255,0.25)] hover:scale-[1.03] hover:brightness-115 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all duration-500 ease-out !h-auto !py-3 !rounded-sm flex items-center gap-2">
-                VIEW ALL PROJECTS
-              </LiquidButton>
-            </Link>
+            <LiquidButton 
+              onClick={() => handleOpenProject(0)}
+              className="border border-white/20 text-cream text-xs tracking-widest uppercase px-6 py-3 bg-white/5 backdrop-blur-md shadow-[0_8px_32px_0_rgba(255,255,255,0.05),inset_0_1px_1px_rgba(255,255,255,0.25)] hover:scale-[1.03] hover:brightness-115 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all duration-500 ease-out !h-auto !py-3 !rounded-sm flex items-center gap-2 cursor-pointer"
+            >
+              VIEW ALL PROJECTS
+            </LiquidButton>
           </m.div>
         </div>
 
@@ -86,6 +96,7 @@ export default function OurWork() {
               }}
               whileHover={{ scale: 1.025 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              onClick={() => handleOpenProject(index)}
               className="group relative aspect-video cursor-pointer"
             >
               <BorderGlow
@@ -133,6 +144,12 @@ export default function OurWork() {
         </m.div>
 
       </div>
+
+      <ProjectModal
+        isOpen={projectModalOpen}
+        onClose={() => setProjectModalOpen(false)}
+        initialProjectIndex={selectedProjectIndex}
+      />
     </section>
   )
 }

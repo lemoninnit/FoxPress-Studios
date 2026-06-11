@@ -1,6 +1,7 @@
 import { m } from 'framer-motion'
 import { TEAM } from '../../constants'
 import ShapeGrid from '../ui/ShapeGrid'
+import BorderGlow from '../ui/BorderGlow'
 import * as Icons from 'lucide-react'
 
 // Import assets
@@ -8,17 +9,17 @@ import battleScene from '../../assets/dragon-battle.jpg'
 
 export default function AboutUs() {
   return (
-    <section id="about" className="w-full bg-black py-20 relative overflow-hidden border-t border-white/5 scroll-mt-20">
+    <section id="about" className="w-full bg-black section-padding relative overflow-hidden border-t border-white/5 scroll-mt-20">
       {/* Background ShapeGrid */}
-      <div className="absolute inset-0 pointer-events-none opacity-10 z-0">
+      <div className="absolute inset-0 pointer-events-none opacity-20 z-0">
         <ShapeGrid 
-          speed={0.3} 
+          speed={0.5} 
           squareSize={40}
           direction='diagonal'
-          borderColor='rgba(201, 162, 39, 0.12)'
-          hoverFillColor='rgba(201, 162, 39, 0.2)'
+          borderColor='rgba(201, 162, 39, 0.15)'
+          hoverFillColor='rgba(201, 162, 39, 0.25)'
           shape='square'
-          hoverTrailAmount={4}
+          hoverTrailAmount={5}
         />
       </div>
 
@@ -58,14 +59,29 @@ export default function AboutUs() {
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="relative aspect-video rounded-sm overflow-hidden border border-white/10 shadow-2xl"
+          className="group relative aspect-video"
         >
-          <img src={battleScene} alt="Our Creative Work" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
-          <div className="absolute bottom-4 left-4 right-4 text-left">
-            <span className="text-[9px] tracking-widest text-gold uppercase font-bold">FOXPRESS STUDIOS</span>
-            <p className="text-cream text-xs font-semibold mt-0.5">Where creative imagination meets digital craftsmanship.</p>
-          </div>
+          <BorderGlow
+            edgeSensitivity={30}
+            glowColor="45 80% 50%"
+            backgroundColor="#0a0a0a"
+            borderRadius={0}
+            glowRadius={40}
+            glowIntensity={1.2}
+            coneSpread={25}
+            animated={false}
+            colors={['#c9a227', '#e5c043', '#8e6d12']}
+            className="w-full h-full border-only-glow"
+          >
+            <div className="relative w-full h-full overflow-hidden">
+              <img src={battleScene} alt="Our Creative Work" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
+              <div className="absolute bottom-4 left-4 right-4 text-left">
+                <span className="text-[9px] tracking-widest text-gold uppercase font-bold">FOXPRESS STUDIOS</span>
+                <p className="text-cream text-xs font-semibold mt-0.5">Where creative imagination meets digital craftsmanship.</p>
+              </div>
+            </div>
+          </BorderGlow>
         </m.div>
       </div>
 
