@@ -1,20 +1,26 @@
 import { lazy, Suspense, useState, useEffect } from 'react'
 import { LazyMotion, domAnimation } from 'framer-motion'
 import { HelmetProvider } from 'react-helmet-async'
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 
 import Navbar from './components/layout/Navbar'
 import Hero from './components/sections/Hero'
 import SEO from './components/ui/SEO'
 import ContactModal from './components/sections/ContactModal'
 
+// Section components for Home page
 const Services = lazy(() => import('./components/sections/Services'))
+const OurWork = lazy(() => import('./components/sections/OurWork'))
+const AboutUs = lazy(() => import('./components/sections/AboutUs'))
+const Awards = lazy(() => import('./components/sections/Awards'))
 const Testimonials = lazy(() => import('./components/sections/Testimonials'))
 const Contact = lazy(() => import('./components/sections/Contact'))
 const Footer = lazy(() => import('./components/layout/Footer'))
 
-const AboutPage = lazy(() => import('./pages/AboutPage'))
+// Dedicated page components
+const ServicesPage = lazy(() => import('./pages/ServicesPage'))
 const OurWorkPage = lazy(() => import('./pages/OurWorkPage'))
+const AboutPage = lazy(() => import('./pages/AboutPage'))
 const AwardsPage = lazy(() => import('./pages/AwardsPage'))
 
 function SectionSkeleton() {
@@ -35,6 +41,9 @@ function Home() {
       <Hero />
       <Suspense fallback={<SectionSkeleton />}>
         <Services />
+        <OurWork />
+        <AboutUs />
+        <Awards />
         <Testimonials />
         <Contact />
       </Suspense>
@@ -44,38 +53,11 @@ function Home() {
 
 function App() {
   const [isContactOpen, setIsContactOpen] = useState(false)
-  const { pathname, hash } = useLocation()
-
-  // Handle hash scrolling on page load/navigate
-  useEffect(() => {
-    if (hash) {
-      const id = hash.replace('#', '')
-      let attempts = 0
-      let timer: number
-
-      const scrollToHash = () => {
-        const element = document.getElementById(id)
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-          return
-        }
-
-        attempts += 1
-        if (attempts < 12) {
-          timer = window.setTimeout(scrollToHash, 100)
-        }
-      }
-
-      timer = window.setTimeout(scrollToHash, 180)
-      return () => window.clearTimeout(timer)
-    }
-  }, [pathname, hash])
+  const { pathname } = useLocation()
 
   useEffect(() => {
-    if (!hash) {
-      window.scrollTo(0, 0);
-    }
-  }, [pathname, hash]);
+    window.scrollTo(0, 0)
+  }, [pathname])
 
   return (
     <HelmetProvider>
@@ -85,10 +67,10 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/about" element={<AboutPage />} />
+            <Route path="/services" element={<ServicesPage />} />
             <Route path="/work" element={<OurWorkPage />} />
+            <Route path="/about" element={<AboutPage />} />
             <Route path="/awards" element={<AwardsPage />} />
-            <Route path="/news" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
         <Suspense fallback={null}>

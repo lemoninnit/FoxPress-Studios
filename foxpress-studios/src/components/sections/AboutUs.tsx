@@ -1,8 +1,8 @@
 import { m } from 'framer-motion'
 import ShapeGrid from '../ui/ShapeGrid'
 import BorderGlow from '../ui/BorderGlow'
-import ImagePlaceholder from '../ui/ImagePlaceholder'
 import InfiniteCarousel from '../ui/InfiniteCarousel'
+import heroBg from '../../assets/hero-bg.jpg'
 
 export default function AboutUs() {
   return (
@@ -71,12 +71,11 @@ export default function AboutUs() {
             className="w-full h-full border-only-glow"
           >
             <div className="relative w-full h-full overflow-hidden">
-              <ImagePlaceholder 
-                title="Foxpress Studios" 
-                category="Creative Craftsmanship" 
-                index={2}
-                hideText={true}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105" 
+              <img
+                src={heroBg}
+                alt="Foxpress Studios"
+                className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-[1200ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
               <div className="absolute bottom-4 left-4 right-4 text-left z-10">

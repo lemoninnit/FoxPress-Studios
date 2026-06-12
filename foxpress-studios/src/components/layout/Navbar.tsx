@@ -11,6 +11,14 @@ interface NavbarProps {
   onContactClick: () => void
 }
 
+const PATH_TO_LABEL: Record<string, string> = {
+  '/': 'Home',
+  '/services': 'Services',
+  '/work': 'Our Work',
+  '/about': 'About Us',
+  '/awards': 'Awards',
+}
+
 export default function Navbar({ onContactClick }: NavbarProps) {
   const scrollY = useScrollY();
   const isScrolled = scrollY > 80;
@@ -19,20 +27,7 @@ export default function Navbar({ onContactClick }: NavbarProps) {
   const navigate = useNavigate();
 
   const handleMobileNavClick = (href: string, label: string) => {
-    const hasHash = href.includes('#');
-    if (hasHash) {
-      const parts = href.split('#');
-      const path = parts[0] || '/';
-      const targetId = parts[1];
-
-      if (location.pathname !== path) {
-        navigate(href);
-      } else {
-        scrollToSection(targetId);
-      }
-    } else {
-      navigate(href);
-    }
+    navigate(href);
     setActiveLink(label);
   };
 
@@ -51,7 +46,7 @@ export default function Navbar({ onContactClick }: NavbarProps) {
       bgColor: "#100d07",
       textColor: "#ffffff",
       links: [
-        { label: "Services", href: "/#services", onClick: () => handleMobileNavClick('/#services', 'Services') },
+        { label: "Services", href: "/services", onClick: () => handleMobileNavClick('/services', 'Services') },
         { label: "Our Work", href: "/work", onClick: () => handleMobileNavClick('/work', 'Our Work') },
       ]
     },
@@ -66,22 +61,11 @@ export default function Navbar({ onContactClick }: NavbarProps) {
     }
   ];
 
-  const scrollToSection = (targetId: string) => {
-    const element = document.getElementById(targetId);
-    if (!element) return false;
-
-    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    window.history.pushState(null, '', '#' + targetId);
-    return true;
-  };
-
   const navigateHome = () => {
     setActiveLink("Home");
 
     if (window.location.pathname !== '/') {
       navigate('/');
-    } else if (window.location.hash) {
-      window.history.pushState(null, '', '/');
     }
 
     window.requestAnimationFrame(() => {
@@ -90,26 +74,12 @@ export default function Navbar({ onContactClick }: NavbarProps) {
   };
 
   useEffect(() => {
-    const path = location.pathname;
-    if (path === '/') {
-      const hash = location.hash;
-      if (hash === '#services') {
-        setActiveLink("Services");
-      } else {
-        setActiveLink("Home");
-      }
-    } else if (path === '/about') {
-      setActiveLink("About Us");
-    } else if (path === '/work') {
-      setActiveLink("Our Work");
-    } else if (path === '/awards') {
-      setActiveLink("Awards");
-    }
-  }, [location.pathname, location.hash]);
+    setActiveLink(PATH_TO_LABEL[location.pathname] ?? 'Home');
+  }, [location.pathname]);
 
   const navLinksToRender = NAV_LINKS.filter(link => link.label !== "Contact Us");
 
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, label: string) => {
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, label: string) => {
     if (label === "Contact Us") {
       e.preventDefault();
       onContactClick();
@@ -122,23 +92,6 @@ export default function Navbar({ onContactClick }: NavbarProps) {
       return;
     }
 
-    const hasHash = href.includes('#');
-    if (hasHash) {
-      e.preventDefault();
-      const parts = href.split('#');
-      const path = parts[0] || '/';
-      const targetId = parts[1];
-
-      if (location.pathname !== path) {
-        navigate(href);
-      } else {
-        scrollToSection(targetId);
-      }
-      setActiveLink(label);
-      return;
-    }
-
-    // regular subpages routes update the activeLink state
     setActiveLink(label);
   };
 
@@ -172,7 +125,7 @@ export default function Navbar({ onContactClick }: NavbarProps) {
               <Link
                 key={link.label}
                 to={link.href}
-                onClick={(e) => handleLinkClick(e, link.href, link.label)}
+                onClick={(e) => handleLinkClick(e, link.label)}
                 className={`text-[10px] lg:text-xs tracking-wider lg:tracking-widest uppercase font-medium transition-colors ${activeLink === link.label ? 'text-gold' : 'text-cream/80 hover:text-gold'}`}
               >
                 {link.label}

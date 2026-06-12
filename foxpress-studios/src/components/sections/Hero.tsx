@@ -11,8 +11,8 @@ import { LiquidButton } from '../ui/liquid-glass-button'
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Hero() {
-  const bgRef = useRef<HTMLVideoElement>(null)
   const navigate = useNavigate()
+  const bgRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     if (bgRef.current) {
@@ -114,10 +114,7 @@ export default function Hero() {
             className="flex flex-col sm:flex-row gap-3 md:gap-4"
           >
             <LiquidButton
-              onClick={() => {
-                const el = document.getElementById('services');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
+              onClick={() => navigate('/services')}
               className="inline-flex items-center gap-2 px-6 py-4 border border-gold/45 text-gold font-semibold text-sm tracking-widest uppercase bg-gold/15 backdrop-blur-md shadow-[0_8px_32px_0_rgba(201,162,39,0.15),inset_0_1px_1px_rgba(255,255,255,0.25)] hover:scale-[1.03] hover:brightness-115 hover:shadow-[0_0_25px_rgba(201,162,39,0.35)] transition-all duration-500 ease-out w-full sm:w-auto justify-center !h-auto !py-4"
             >
               OUR SERVICES

@@ -1,13 +1,11 @@
 import { useState } from 'react'
 import { m } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
-import { PROJECTS } from '../../constants'
+import { PROJECTS, PROJECT_IMAGES } from '../../constants'
 import { LiquidButton } from '../ui/liquid-glass-button'
 import ShapeGrid from '../ui/ShapeGrid'
 import BorderGlow from '../ui/BorderGlow'
 import ProjectModal from './ProjectModal'
-
-import ImagePlaceholder from '../ui/ImagePlaceholder'
 
 export default function OurWork() {
   const [projectModalOpen, setProjectModalOpen] = useState(false)
@@ -103,12 +101,11 @@ export default function OurWork() {
               >
                 <div className="relative w-full h-full overflow-hidden">
                   {/* Image */}
-                  <ImagePlaceholder
-                    title={project.title}
-                    category={project.category}
-                    index={index}
-                    hideText={true}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                  <img
+                    src={PROJECT_IMAGES[index]}
+                    alt={project.title}
+                    className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-[1200ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                    loading="lazy"
                   />
 
                   {/* Overlay Gradient */}

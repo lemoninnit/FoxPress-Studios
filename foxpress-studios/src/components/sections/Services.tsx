@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { m } from 'framer-motion'
-import { SERVICES } from '../../constants'
+import { SERVICES, SERVICE_IMAGES } from '../../constants'
 import ShapeGrid from '../ui/ShapeGrid'
 import BorderGlow from '../ui/BorderGlow'
 import ServiceModal from './ServiceModal'
-import ImagePlaceholder from '../ui/ImagePlaceholder'
 
 import countriesServed from '../../assets/Countries Served.png'
 import projectsCompleted from '../../assets/Projects Completed.png'
@@ -16,17 +15,18 @@ const SERVICE_ICONS = [
   projectsCompleted,
   creativeProfessionals,
   industryAwards,
+  projectsCompleted,
 ]
 
 interface ServiceCardProps {
   title: string
   desc: string
   iconSrc: string
-  index: number
+  imageSrc: string
   onClick?: () => void
 }
 
-function ServiceCard({ title, desc, iconSrc, index, onClick }: ServiceCardProps) {
+function ServiceCard({ title, desc, iconSrc, imageSrc, onClick }: ServiceCardProps) {
   return (
     <m.div
       variants={{
@@ -36,7 +36,7 @@ function ServiceCard({ title, desc, iconSrc, index, onClick }: ServiceCardProps)
       whileHover={{ scale: 1.025 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       onClick={onClick}
-      className="relative aspect-[4/3] cursor-pointer group"
+      className="relative aspect-[3/5] min-h-[300px] w-full min-w-[148px] sm:min-w-[168px] xl:min-w-0 h-full cursor-pointer group snap-start shrink-0 xl:shrink"
     >
       <BorderGlow
         edgeSensitivity={30}
@@ -50,27 +50,25 @@ function ServiceCard({ title, desc, iconSrc, index, onClick }: ServiceCardProps)
         colors={['#c9a227', '#e5c043', '#8e6d12']}
         className="w-full h-full border-0"
       >
-        <div className="relative w-full h-full overflow-hidden">
-          <ImagePlaceholder 
-            title={title}
-            index={index}
-            hideText={true}
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-          />
-          <div 
-            className="absolute inset-0" 
-            style={{ background: 'linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.5) 50%, rgba(10,10,10,0.1) 100%)' }}
-          ></div>
-          <div className="absolute bottom-0 left-0 right-0 p-3 md:p-5 z-10 flex flex-col justify-end">
-            <div className="mb-3">
-              <div className="w-9 h-9 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center group-hover:bg-gold/20 transition-all duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] p-1.5">
+        <div className="relative w-full h-full grid grid-rows-[52%_48%] overflow-hidden bg-[#0a0a0a]">
+          <div className="relative flex items-center justify-center overflow-hidden bg-black/60 p-1.5 sm:p-2">
+            <img
+              src={imageSrc}
+              alt={title}
+              className="w-full h-full object-contain object-center transition-transform duration-[1200ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+          <div className="p-2.5 sm:p-3 xl:p-4 flex flex-col border-t border-white/5 min-h-0">
+            <div className="mb-2">
+              <div className="w-8 h-8 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center group-hover:bg-gold/20 transition-all duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] p-1.5">
                 <img src={iconSrc} alt={title} className="w-full h-full object-contain" aria-hidden="true" />
               </div>
             </div>
-            <h3 className="text-cream font-display font-bold text-xs md:text-sm uppercase tracking-wide mb-2">
+            <h3 className="text-cream font-display font-bold text-[10px] sm:text-[11px] xl:text-xs uppercase tracking-wide mb-1.5 leading-tight">
               {title}
             </h3>
-            <p className="text-cream/60 text-xs leading-relaxed hidden sm:block">
+            <p className="text-cream/60 text-[10px] sm:text-[11px] leading-relaxed line-clamp-4">
               {desc}
             </p>
           </div>
@@ -103,7 +101,7 @@ export default function Services() {
           hoverTrailAmount={5}
         />
       </div>
-      <div className="container-width grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center relative z-10">
+      <div className="container-width-wide grid grid-cols-1 xl:grid-cols-[minmax(240px,26%)_1fr] gap-8 xl:gap-10 items-center relative z-10">
         
         {/* Left column — intro block */}
         <m.div
@@ -130,16 +128,16 @@ export default function Services() {
           </button>
         </m.div>
 
-        {/* Right column — 2x2 card grid */}
+        {/* Right column — 5 cards in a horizontal row */}
         <m.div
           variants={{
             hidden: {},
-            show: { transition: { staggerChildren: 0.12 } }
+            show: { transition: { staggerChildren: 0.1 } }
           }}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
-          className="grid grid-cols-2 gap-4"
+          className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory xl:grid xl:grid-cols-5 xl:items-stretch xl:overflow-visible xl:pb-0 w-full [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {SERVICES.map((service, index) => (
             <m.div
@@ -148,12 +146,13 @@ export default function Services() {
                 hidden: { opacity: 0, y: 30 },
                 show: { opacity: 1, y: 0, transition: { duration: 0.6 } }
               }}
+              className="flex-1 xl:flex-none h-full"
             >
               <ServiceCard 
                 title={service.title}
                 desc={service.desc}
                 iconSrc={SERVICE_ICONS[index]}
-                index={index}
+                imageSrc={SERVICE_IMAGES[index]}
                 onClick={() => handleOpenService(index)}
               />
             </m.div>

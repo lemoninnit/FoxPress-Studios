@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { m, AnimatePresence } from 'framer-motion'
 import { X, CheckCircle2 } from 'lucide-react'
 import BorderGlow from '../ui/BorderGlow'
-import ImagePlaceholder from '../ui/ImagePlaceholder'
+import { SERVICE_IMAGES } from '../../constants'
 
 import countriesServed from '../../assets/Countries Served.png'
 import projectsCompleted from '../../assets/Projects Completed.png'
@@ -19,6 +19,7 @@ const SERVICE_DATA = [
   {
     title: "Film & Video Productions",
     iconSrc: countriesServed,
+    imageSrc: SERVICE_IMAGES[0],
     subtitle: "Premium Cinematic Content",
     description: "Our cinematic production team handles everything from scriptwriting and storyboarding to final filming and color grading. We specialize in producing premium TV commercials, trailers, brand documentaries, and corporate storytelling that captivates audiences.",
     capabilities: ["Cinematography & Directing", "Screenwriting & Storyboarding", "Color Grading & Editing", "Commercial Production"],
@@ -27,6 +28,7 @@ const SERVICE_DATA = [
   {
     title: "CGI & Animation",
     iconSrc: projectsCompleted,
+    imageSrc: SERVICE_IMAGES[1],
     subtitle: "Photorealistic 3D Artistry",
     description: "We create stunning 3D CGI characters, photorealistic product renderings, and environment animations that defy reality. Whether it is a creature sequence or a futuristic architecture simulation, our CGI artists deliver world-class animation.",
     capabilities: ["3D Character Animation", "Creature & Asset Rigging", "Fluid & FX Simulation", "Sub-surface Skin Rendering"],
@@ -35,14 +37,25 @@ const SERVICE_DATA = [
   {
     title: "Publicity & Media Placement",
     iconSrc: creativeProfessionals,
+    imageSrc: SERVICE_IMAGES[2],
     subtitle: "High-Impact Press Campaigns",
     description: "Get your brand noticed by the right audience. We design custom PR campaigns, write compelling press releases, and secure media spots in top-tier digital and print publications to build credibility and multiply your reach.",
     capabilities: ["Press Release Distribution", "Targeted Media Pitching", "Brand Strategy Consulting", "Crisis PR & Reputation Management"],
     tools: "Cision, PR Newswire, Custom Media Databases"
   },
   {
-    title: "Events & Creative Campaigns",
+    title: "Distribution & Publishing Support",
     iconSrc: industryAwards,
+    imageSrc: SERVICE_IMAGES[3],
+    subtitle: "Global Reach for Authors",
+    description: "We help authors and creators reach readers worldwide through global distribution, bookstore placement, and end-to-end publishing support tailored to your goals.",
+    capabilities: ["Global Digital Distribution", "Bookstore & Retail Placement", "Publishing Strategy", "Author Platform Development"],
+    tools: "IngramSpark, Draft2Digital, Amazon KDP, Bowker"
+  },
+  {
+    title: "Events & Creative Campaigns",
+    iconSrc: projectsCompleted,
+    imageSrc: SERVICE_IMAGES[4],
     subtitle: "Experiential Digital Marketing",
     description: "Integrated marketing campaigns and experiential events that connect deeply with consumers. We combine physical brand events, online interactive experiences, social media teasers, and advertising campaigns to maximize conversions.",
     capabilities: ["Experiential Marketing Tours", "Interactive WebGL Experiences", "Social Media Teaser Suites", "Multi-platform Campaigns"],
@@ -129,10 +142,9 @@ export default function ServiceModal({ isOpen, onClose, initialServiceIndex = 0 
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start text-left mb-8">
                   {/* Left Column: Image of Active Service (no cropping, aspect-video matching original) */}
                   <div className="md:col-span-7 relative aspect-video rounded-sm overflow-hidden border border-white/10">
-                    <ImagePlaceholder 
-                      title={service.title} 
-                      category={service.subtitle}
-                      index={currentIndex}
+                    <img
+                      src={service.imageSrc}
+                      alt={service.title}
                       className="absolute inset-0 w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -175,10 +187,10 @@ export default function ServiceModal({ isOpen, onClose, initialServiceIndex = 0 
                 {/* Divider */}
                 <div className="w-full h-[1px] bg-white/5 mb-6"></div>
 
-                {/* Bottom: 4 Image Buttons */}
+                {/* Bottom: service category buttons */}
                 <div className="text-left mb-2">
                   <p className="text-[9px] tracking-widest text-gold/80 uppercase font-bold mb-3">SELECT A SERVICE CATEGORY</p>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                     {SERVICE_DATA.map((item, idx) => {
                       return (
                         <button
@@ -190,11 +202,9 @@ export default function ServiceModal({ isOpen, onClose, initialServiceIndex = 0 
                               : 'border-white/10 opacity-60 hover:opacity-95 hover:scale-[1.01] brightness-90'
                           }`}
                         >
-                          <ImagePlaceholder 
-                            title={item.title} 
-                            category={item.subtitle}
-                            index={idx}
-                            hideText={true}
+                          <img
+                            src={item.imageSrc}
+                            alt={item.title}
                             className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           />
                           <div className="absolute inset-0 bg-black/65 group-hover:bg-black/55 transition-colors duration-300"></div>

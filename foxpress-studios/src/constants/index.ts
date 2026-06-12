@@ -1,8 +1,33 @@
 import type { NavLink, Service, Testimonial, TeamMember, Award, Project } from '../types';
 
+import serviceFilm from '../assets/service-film.jpg';
+import serviceCgi from '../assets/service-cgi.jpg';
+import servicePublicity from '../assets/service-publicity.jpg';
+import serviceDistribution from '../assets/service-distribution.jpg';
+import serviceEvents from '../assets/service-events.jpg';
+import dragonBlue from '../assets/dragon-blue.jpg';
+import dragonRed from '../assets/dragon-red.jpg';
+import dragonWhite from '../assets/dragon-white.jpg';
+import dragonBattle from '../assets/dragon-battle.jpg';
+
+export const SERVICE_IMAGES = [
+  serviceFilm,
+  serviceCgi,
+  servicePublicity,
+  serviceDistribution,
+  serviceEvents,
+] as const;
+
+export const PROJECT_IMAGES = [
+  dragonBlue,
+  dragonRed,
+  dragonWhite,
+  dragonBattle,
+] as const;
+
 export const NAV_LINKS: NavLink[] = [
   { label: "Home", href: "/" },
-  { label: "Services", href: "/#services" },
+  { label: "Services", href: "/services" },
   { label: "Our Work", href: "/work" },
   { label: "About Us", href: "/about" },
   { label: "Awards", href: "/awards" },
@@ -10,10 +35,11 @@ export const NAV_LINKS: NavLink[] = [
 ];
 
 export const SERVICES: Service[] = [
-  { title: 'Film & Video Productions', desc: 'High-quality film, TV, trailers, and branded content that bring your story to life.', icon: 'Video' },
-  { title: 'CGI & Animation', desc: 'Stunning CGI, animation, and visual effects that elevate your vision.', icon: 'Sparkles' },
-  { title: 'Publicity & Media Placement', desc: 'Strategic PR, press releases, and media exposure that build your brand presence.', icon: 'Megaphone' },
-  { title: 'Events & Creative Campaigns', desc: 'Creative campaigns and events that engage audiences and drive results.', icon: 'CalendarDays' },
+  { title: 'Film & Video Productions', desc: 'High-quality films, trailers, and branded content that captivate.', icon: 'Video' },
+  { title: 'CGI & Animation', desc: 'Stunning CGI, animation, and visual effects that bring imagination to life.', icon: 'Sparkles' },
+  { title: 'Publicity & Media Placement', desc: 'Press releases, media exposure, and PR that build your brand.', icon: 'Megaphone' },
+  { title: 'Distribution & Publishing Support', desc: 'Global distribution, bookstore placement, and publishing solutions for authors.', icon: 'BookOpen' },
+  { title: 'Events & Creative Campaigns', desc: 'Creative campaigns and events that engage audiences and drive results.', icon: 'Users' },
 ];
 
 export const TESTIMONIALS: Testimonial[] = [

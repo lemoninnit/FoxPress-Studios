@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { m, AnimatePresence } from 'framer-motion'
 import { Mail, MapPin, Phone, ChevronUp } from 'lucide-react'
 import { NAV_LINKS, SERVICES } from '../../constants'
@@ -12,27 +12,15 @@ const Youtube = ({ size = 24 }: { size?: number }) => <svg xmlns="http://www.w3.
 
 export default function Footer() {
   const scrollY = useScrollY()
-  const location = useLocation()
   const navigate = useNavigate()
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const scrollToSection = (targetId: string) => {
-    const element = document.getElementById(targetId)
-    if (!element) return false
-
-    element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    window.history.pushState(null, '', '#' + targetId)
-    return true
-  }
-
   const navigateHome = () => {
     if (window.location.pathname !== '/') {
       navigate('/')
-    } else if (window.location.hash) {
-      window.history.pushState(null, '', '/')
     }
 
     window.requestAnimationFrame(() => {
@@ -40,35 +28,10 @@ export default function Footer() {
     })
   }
 
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, label: string) => {
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, label: string) => {
     if (label === "Home") {
       e.preventDefault()
       navigateHome()
-      return
-    }
-
-    const hasHash = href.includes('#')
-    if (hasHash) {
-      e.preventDefault()
-      const parts = href.split('#')
-      const path = parts[0] || '/'
-      const targetId = parts[1]
-
-      if (location.pathname !== path) {
-        navigate(href)
-      } else {
-        scrollToSection(targetId)
-      }
-      return
-    }
-  }
-
-  const handleServiceClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault()
-    if (location.pathname !== '/') {
-      navigate('/#services')
-    } else {
-      scrollToSection('services')
     }
   }
 
@@ -134,7 +97,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <Link
                       to={link.href}
-                      onClick={(e) => handleLinkClick(e, link.href, link.label)}
+                      onClick={(e) => handleLinkClick(e, link.label)}
                       className="text-muted text-sm hover:text-gold transition-colors duration-200 block py-0.5 text-center"
                     >
                       {link.label}
@@ -157,8 +120,7 @@ export default function Footer() {
                 {SERVICES.map(service => (
                   <li key={service.title}>
                     <Link
-                      to="/#services"
-                      onClick={handleServiceClick}
+                      to="/services"
                       className="text-muted text-sm hover:text-gold hover:drop-shadow-[0_0_12px_rgba(201,162,39,0.95)] hover:[text-shadow:0_0_8px_rgba(201,162,39,0.85)] transition-all duration-300 block py-0.5 text-center md:text-right cursor-pointer"
                     >
                       {service.title}

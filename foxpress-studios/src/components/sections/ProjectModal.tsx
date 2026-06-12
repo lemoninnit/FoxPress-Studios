@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { m, AnimatePresence } from 'framer-motion'
 import { X, Calendar, User, Cpu } from 'lucide-react'
 import BorderGlow from '../ui/BorderGlow'
-import ImagePlaceholder from '../ui/ImagePlaceholder'
+import { PROJECT_IMAGES } from '../../constants'
 
 interface ProjectModalProps {
   isOpen: boolean
@@ -14,6 +14,7 @@ const PROJECT_DATA = [
   {
     title: "Ethereal Ascension",
     category: "CGI & Animation",
+    imageSrc: PROJECT_IMAGES[0],
     client: "Epic Games",
     date: "January 2026",
     tech: "Unreal Engine 5, Houdini, Substance Painter",
@@ -22,6 +23,7 @@ const PROJECT_DATA = [
   {
     title: "Crimson Skies",
     category: "Film Production",
+    imageSrc: PROJECT_IMAGES[1],
     client: "Paramount Pictures",
     date: "November 2025",
     tech: "RED V-Raptor, Cooke Anamorphic, DaVinci Resolve",
@@ -30,6 +32,7 @@ const PROJECT_DATA = [
   {
     title: "The Frost King",
     category: "Visual Effects",
+    imageSrc: PROJECT_IMAGES[2],
     client: "Warner Bros",
     date: "July 2025",
     tech: "Nuke, Maya, Arnold Renderer, Deep Compositing",
@@ -38,6 +41,7 @@ const PROJECT_DATA = [
   {
     title: "Battle of the Ancients",
     category: "Creative Campaign",
+    imageSrc: PROJECT_IMAGES[3],
     client: "Tencent Games",
     date: "March 2025",
     tech: "React, WebGL, Adobe Premiere Pro, After Effects",
@@ -124,11 +128,10 @@ export default function ProjectModal({ isOpen, onClose, initialProjectIndex = 0 
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start text-left mb-8">
                   {/* Left Column: Image of Active Project */}
                   <div className="md:col-span-7 relative aspect-video rounded-sm overflow-hidden border border-white/10">
-                    <ImagePlaceholder 
-                      title={project.title} 
-                      category={project.category}
-                      index={currentIndex}
-                      className="absolute inset-0 w-full h-full object-cover"
+                    <img
+                      src={project.imageSrc}
+                      alt={project.title}
+                      className="absolute inset-0 w-full h-full object-cover object-center"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                   </div>
@@ -179,12 +182,10 @@ export default function ProjectModal({ isOpen, onClose, initialProjectIndex = 0 
                             : 'border-white/10 opacity-60 hover:opacity-95 hover:scale-[1.01] brightness-90'
                         }`}
                       >
-                        <ImagePlaceholder 
-                          title={item.title} 
-                          category={item.category}
-                          index={idx}
-                          hideText={true}
-                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        <img
+                          src={item.imageSrc}
+                          alt={item.title}
+                          className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 bg-black/65 group-hover:bg-black/55 transition-colors duration-300"></div>
                         <div className="absolute inset-0 p-2 flex flex-col justify-end">
