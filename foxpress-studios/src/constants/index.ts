@@ -5,10 +5,12 @@ import serviceCgi from '../assets/service-cgi.jpg';
 import servicePublicity from '../assets/service-publicity.jpg';
 import serviceDistribution from '../assets/service-distribution.jpg';
 import serviceEvents from '../assets/service-events.jpg';
-import dragonBlue from '../assets/dragon-blue.jpg';
-import dragonRed from '../assets/dragon-red.jpg';
-import dragonWhite from '../assets/dragon-white.jpg';
-import dragonBattle from '../assets/dragon-battle.jpg';
+import splitThumbnail from '../assets/thumbnail/split-thumbnail.png';
+import magicalEggsThumbnail from '../assets/thumbnail/MagicalEggs-thumbnail.png';
+import magicWineThumbnail from '../assets/thumbnail/MagicWine-thumbnail.png';
+import congCatchersThumbnail from '../assets/thumbnail/CongCatchers-thumbnail.png';
+import destinedThumbnail from '../assets/thumbnail/destined-thumbnail.png';
+import redeemedThumbnail from '../assets/thumbnail/redeemed-thumbnail.png';
 
 export const SERVICE_IMAGES = [
   serviceFilm,
@@ -19,10 +21,12 @@ export const SERVICE_IMAGES = [
 ] as const;
 
 export const PROJECT_IMAGES = [
-  dragonBlue,
-  dragonRed,
-  dragonWhite,
-  dragonBattle,
+  splitThumbnail,
+  magicalEggsThumbnail,
+  magicWineThumbnail,
+  congCatchersThumbnail,
+  destinedThumbnail,
+  redeemedThumbnail,
 ] as const;
 
 export const NAV_LINKS: NavLink[] = [
@@ -65,8 +69,8 @@ export const AWARDS: Award[] = [
 ];
 
 export const PROJECTS: Project[] = [
-  { title: "Ethereal Ascension", category: "CGI & Animation" },
-  { title: "Crimson Skies", category: "Film Production" },
-  { title: "The Frost King", category: "Visual Effects" },
-  { title: "Battle of the Ancients", category: "Creative Campaign" },
+  { title: "Split Sceen INTRO", category: "Dr. Anna Aragno" },
+  { title: "The Magical Eggs On Dragon's Lair Ep. 1", category: "Georgina Sano" },
+  { title: "The Magic Wine Cup Teaser", category: "Helene Meyers" },
+  { title: "Cong Catchers Teaser", category: "Lee Halverson" },
 ];

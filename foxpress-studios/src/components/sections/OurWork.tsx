@@ -10,9 +10,11 @@ import ProjectModal from './ProjectModal'
 export default function OurWork() {
   const [projectModalOpen, setProjectModalOpen] = useState(false)
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(0)
+  const [showAllProjects, setShowAllProjects] = useState(false)
 
-  const handleOpenProject = (index: number) => {
+  const handleOpenProject = (index: number, showAll = false) => {
     setSelectedProjectIndex(index)
+    setShowAllProjects(showAll)
     setProjectModalOpen(true)
   }
 
@@ -56,7 +58,7 @@ export default function OurWork() {
             viewport={{ once: true }}
           >
             <LiquidButton 
-              onClick={() => handleOpenProject(0)}
+              onClick={() => handleOpenProject(0, true)}
               className="border border-white/20 text-cream text-xs tracking-widest uppercase px-6 py-3 bg-white/5 backdrop-blur-md shadow-[0_8px_32px_0_rgba(255,255,255,0.05),inset_0_1px_1px_rgba(255,255,255,0.25)] hover:scale-[1.03] hover:brightness-115 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all duration-500 ease-out !h-auto !py-3 !rounded-sm flex items-center gap-2 cursor-pointer"
             >
               VIEW ALL PROJECTS
@@ -84,7 +86,7 @@ export default function OurWork() {
               }}
               whileHover={{ scale: 1.025 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              onClick={() => handleOpenProject(index)}
+              onClick={() => handleOpenProject(index, true)}
               className="group relative aspect-video cursor-pointer"
             >
               <BorderGlow
@@ -136,6 +138,7 @@ export default function OurWork() {
         isOpen={projectModalOpen}
         onClose={() => setProjectModalOpen(false)}
         initialProjectIndex={selectedProjectIndex}
+        showAllProjects={showAllProjects}
       />
     </section>
   )

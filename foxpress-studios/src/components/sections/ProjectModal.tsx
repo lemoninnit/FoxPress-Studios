@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { m, AnimatePresence } from 'framer-motion'
-import { X, Calendar, User, Cpu } from 'lucide-react'
+import { X, Calendar, User, Cpu, ChevronLeft, ChevronRight } from 'lucide-react'
 import BorderGlow from '../ui/BorderGlow'
 import { PROJECT_IMAGES } from '../../constants'
 
@@ -8,49 +8,80 @@ interface ProjectModalProps {
   isOpen: boolean
   onClose: () => void
   initialProjectIndex?: number
+  showAllProjects?: boolean
 }
 
 const PROJECT_DATA = [
   {
-    title: "Ethereal Ascension",
-    category: "CGI & Animation",
+    title: "Split Sceen INTRO",
+    category: "Dr. Anna Aragno",
     imageSrc: PROJECT_IMAGES[0],
-    client: "Epic Games",
-    date: "January 2026",
-    tech: "Unreal Engine 5, Houdini, Substance Painter",
-    description: "A groundbreaking digital cinematic showcasing advanced character design, high-fidelity skin shading, and dynamic muscle simulation. Developed using custom Houdini and Unreal Engine 5 pipelines, this showcase features a photorealistic white dragon rendering with sub-surface scattering skin textures and realistic wing articulation."
+    videoSrc: "https://www.youtube.com/embed/q53x16txh4o",
+    client: "Dr. Anna Aragno",
+    date: "June 2026",
+    tech: "Creative Editing, Motion Graphics",
+    description: "An elegant, stylized intro sequence showing creative direction and high-end video compilation methods."
   },
   {
-    title: "Crimson Skies",
-    category: "Film Production",
+    title: "The Magical Eggs On Dragon's Lair Ep. 1",
+    category: "Georgina Sano",
     imageSrc: PROJECT_IMAGES[1],
-    client: "Paramount Pictures",
-    date: "November 2025",
-    tech: "RED V-Raptor, Cooke Anamorphic, DaVinci Resolve",
-    description: "An epic action-adventure commercial production involving high-speed camera work, anamorphic lenses, and practical pyrotechnic effects. Our production team traveled across remote mountainous locations to capture stunning natural vistas, seamlessly integrated with real-time digital sky replacements."
+    videoSrc: "https://www.youtube.com/embed/XDcrGFg98Qk",
+    client: "Georgina Sano",
+    date: "May 2026",
+    tech: "CGI, Animation, Unreal Engine",
+    description: "Episode 1 of 'The Magical Eggs On Dragon's Lair' series. This fantasy project combines high-quality character animation and complex lighting rigs to bring the magical dragon eggs to life."
   },
   {
-    title: "The Frost King",
-    category: "Visual Effects",
+    title: "The Magic Wine Cup Teaser",
+    category: "Helene Meyers",
     imageSrc: PROJECT_IMAGES[2],
-    client: "Warner Bros",
-    date: "July 2025",
-    tech: "Nuke, Maya, Arnold Renderer, Deep Compositing",
-    description: "Feature-film grade VFX sequence involving complex particle systems, fluid simulations for snow and ice, and custom creature integration. Using deep compositing techniques, our team combined live-action actors with massive digital environments and dynamic environmental destruction elements."
+    videoSrc: "https://www.youtube.com/embed/JTOwZr8IOI8",
+    client: "Helene Meyers",
+    date: "April 2026",
+    tech: "Cinematography, Visual Tone, Sound Editing",
+    description: "Teaser video for 'The Magic Wine Cup & Other Jewish Plays'. This dramatic trailer establishes the mysterious and magical atmosphere of the upcoming theatrical adaptation."
   },
   {
-    title: "Battle of the Ancients",
-    category: "Creative Campaign",
+    title: "Cong Catchers Teaser",
+    category: "Lee Halverson",
     imageSrc: PROJECT_IMAGES[3],
-    client: "Tencent Games",
-    date: "March 2025",
-    tech: "React, WebGL, Adobe Premiere Pro, After Effects",
-    description: "A multi-platform digital marketing campaign designed to engage players and boost community retention. Combining immersive web interactive experiences, social media teasers, and cinematic trailers, the campaign generated over 50 million impressions worldwide."
+    videoSrc: "https://www.youtube.com/embed/EO3y0fWjGJE",
+    client: "Lee Halverson",
+    date: "March 2026",
+    tech: "Sound Design, Editing, Creative Campaign",
+    description: "High-impact teaser campaign trailer showcasing fast cuts, stylized typography, and professional action-oriented sound design."
+  },
+  {
+    title: "Destined To Live 9 Lives Teaser",
+    category: "Phyllis Duke",
+    imageSrc: PROJECT_IMAGES[4],
+    videoSrc: "https://www.youtube.com/embed/M08SGI8QHt8",
+    client: "Phyllis Duke",
+    date: "February 2026",
+    tech: "Cinematography, Visual Effects, Editing",
+    description: "An evocative teaser for 'Destined To Live 9 Lives' showcasing dramatic visual pacing, rich color grading, and compelling narrative structure."
+  },
+  {
+    title: "A Redeemed Soul's Journey Teaser",
+    category: "Walter Scarborough",
+    imageSrc: PROJECT_IMAGES[5],
+    videoSrc: "https://www.youtube.com/embed/SU8T6DDv72Q",
+    client: "Walter Scarborough",
+    date: "January 2026",
+    tech: "Creative Editing, Sound Design, Motion Graphics",
+    description: "A high-impact cinematic teaser tracking a spiritual and emotional journey, featuring expert audio integration and evocative motion graphics."
   }
 ]
 
-export default function ProjectModal({ isOpen, onClose, initialProjectIndex = 0 }: ProjectModalProps) {
+export default function ProjectModal({ 
+  isOpen, 
+  onClose, 
+  initialProjectIndex = 0,
+  showAllProjects = true
+}: ProjectModalProps) {
   const [currentIndex, setCurrentIndex] = useState(initialProjectIndex)
+  const scrollRef = useRef<HTMLDivElement>(null)
 
   // Sync index with initialProjectIndex when modal opens
   useEffect(() => {
@@ -70,7 +101,19 @@ export default function ProjectModal({ isOpen, onClose, initialProjectIndex = 0 
     }
   }, [isOpen])
 
-  const project = PROJECT_DATA[currentIndex]
+  const scrollLeft = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -260, behavior: 'smooth' })
+    }
+  }
+
+  const scrollRight = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: 260, behavior: 'smooth' })
+    }
+  }
+
+  const project = PROJECT_DATA[currentIndex] || PROJECT_DATA[0]
 
   return (
     <AnimatePresence>
@@ -126,14 +169,17 @@ export default function ProjectModal({ isOpen, onClose, initialProjectIndex = 0 
 
                 {/* Top: Wordings / Project Details */}
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start text-left mb-8">
-                  {/* Left Column: Image of Active Project */}
-                  <div className="md:col-span-7 relative aspect-video rounded-sm overflow-hidden border border-white/10">
-                    <img
-                      src={project.imageSrc}
-                      alt={project.title}
-                      className="absolute inset-0 w-full h-full object-cover object-center"
+                  {/* Left Column: Video of Active Project */}
+                  <div className="md:col-span-7 relative aspect-video rounded-sm overflow-hidden border border-white/10 bg-black">
+                    <iframe
+                      key={project.videoSrc}
+                      src={project.videoSrc}
+                      title={project.title}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      className="w-full h-full"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                   </div>
 
                   {/* Right Column: Title, Category, Stats, and Details Description */}
@@ -168,33 +214,97 @@ export default function ProjectModal({ isOpen, onClose, initialProjectIndex = 0 
                 {/* Divider */}
                 <div className="w-full h-[1px] bg-white/5 mb-6"></div>
 
-                {/* Bottom: 4 Image Buttons */}
+                {/* Bottom: Carousel / Grid */}
                 <div className="text-left mb-2">
-                  <p className="text-[9px] tracking-widest text-gold/80 uppercase font-bold mb-3">SELECT A PROJECT CATEGORY</p>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    {PROJECT_DATA.map((item, idx) => (
+                  <p className="text-[9px] tracking-widest text-gold/80 uppercase font-bold mb-3">
+                    {showAllProjects ? "SELECT A PROJECT" : "SELECT A PROJECT CATEGORY"}
+                  </p>
+                  
+                  {showAllProjects ? (
+                    <div className="relative group/carousel w-full flex items-center">
+                      <style>{`
+                        .no-scrollbar::-webkit-scrollbar {
+                          display: none;
+                        }
+                        .no-scrollbar {
+                          -ms-overflow-style: none;
+                          scrollbar-width: none;
+                        }
+                      `}</style>
+                      
+                      {/* Left Arrow */}
                       <button
-                        key={item.category}
-                        onClick={() => setCurrentIndex(idx)}
-                        className={`relative aspect-video rounded-sm overflow-hidden border text-left p-0 cursor-pointer transition-all duration-300 group ${
-                          currentIndex === idx 
-                            ? 'border-gold shadow-[0_0_12px_rgba(201,162,39,0.3)] scale-[1.02] brightness-110' 
-                            : 'border-white/10 opacity-60 hover:opacity-95 hover:scale-[1.01] brightness-90'
-                        }`}
+                        onClick={scrollLeft}
+                        className="absolute -left-3 z-20 w-8 h-8 rounded-full bg-black/80 border border-white/10 flex items-center justify-center text-cream hover:text-gold hover:border-gold/50 transition-all duration-300 cursor-pointer shadow-lg hover:scale-110 active:scale-95"
+                        aria-label="Scroll left"
                       >
-                        <img
-                          src={item.imageSrc}
-                          alt={item.title}
-                          className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-black/65 group-hover:bg-black/55 transition-colors duration-300"></div>
-                        <div className="absolute inset-0 p-2 flex flex-col justify-end">
-                          <span className="text-[8px] text-gold font-bold tracking-wider uppercase">{item.category}</span>
-                          <span className="text-[10px] text-cream font-semibold truncate leading-tight uppercase">{item.title}</span>
-                        </div>
+                        <ChevronLeft size={16} />
                       </button>
-                    ))}
-                  </div>
+
+                      {/* Carousel Scroll Container */}
+                      <div
+                        ref={scrollRef}
+                        className="w-full overflow-x-auto no-scrollbar flex gap-3 snap-x snap-mandatory scroll-smooth pb-2 px-1"
+                      >
+                        {PROJECT_DATA.map((item, idx) => (
+                          <button
+                            key={item.title}
+                            onClick={() => setCurrentIndex(idx)}
+                            className={`flex-shrink-0 w-[46%] sm:w-[30%] md:w-[23%] relative aspect-video rounded-sm overflow-hidden border text-left p-0 cursor-pointer transition-all duration-300 group snap-start ${
+                              currentIndex === idx
+                                ? 'border-gold shadow-[0_0_12px_rgba(201,162,39,0.3)] scale-[1.02] brightness-110'
+                                : 'border-white/10 opacity-60 hover:opacity-95 hover:scale-[1.01] brightness-90'
+                            }`}
+                          >
+                            <img
+                              src={item.imageSrc}
+                              alt={item.title}
+                              className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-black/65 group-hover:bg-black/55 transition-colors duration-300"></div>
+                            <div className="absolute inset-0 p-2 flex flex-col justify-end">
+                              <span className="text-[8px] text-gold font-bold tracking-wider uppercase">{item.category}</span>
+                              <span className="text-[10px] text-cream font-semibold truncate leading-tight uppercase">{item.title}</span>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+
+                      {/* Right Arrow */}
+                      <button
+                        onClick={scrollRight}
+                        className="absolute -right-3 z-20 w-8 h-8 rounded-full bg-black/80 border border-white/10 flex items-center justify-center text-cream hover:text-gold hover:border-gold/50 transition-all duration-300 cursor-pointer shadow-lg hover:scale-110 active:scale-95"
+                        aria-label="Scroll right"
+                      >
+                        <ChevronRight size={16} />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                      {PROJECT_DATA.slice(0, 4).map((item, idx) => (
+                        <button
+                          key={item.title}
+                          onClick={() => setCurrentIndex(idx)}
+                          className={`relative aspect-video rounded-sm overflow-hidden border text-left p-0 cursor-pointer transition-all duration-300 group ${
+                            currentIndex === idx
+                              ? 'border-gold shadow-[0_0_12px_rgba(201,162,39,0.3)] scale-[1.02] brightness-110'
+                              : 'border-white/10 opacity-60 hover:opacity-95 hover:scale-[1.01] brightness-90'
+                          }`}
+                        >
+                          <img
+                            src={item.imageSrc}
+                            alt={item.title}
+                            className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-black/65 group-hover:bg-black/55 transition-colors duration-300"></div>
+                          <div className="absolute inset-0 p-2 flex flex-col justify-end">
+                            <span className="text-[8px] text-gold font-bold tracking-wider uppercase">{item.category}</span>
+                            <span className="text-[10px] text-cream font-semibold truncate leading-tight uppercase">{item.title}</span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
               </div>
