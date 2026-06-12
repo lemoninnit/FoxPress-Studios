@@ -92,19 +92,19 @@ export default function Footer() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0 * 0.1 }}
               viewport={{ once: true }}
-              className="text-left"
+              className="text-center md:text-left flex flex-col items-center md:items-start"
             >
-              <Link to="/" className="flex items-center justify-start gap-3 mb-4">
+              <Link to="/" className="flex items-center justify-center md:justify-start gap-3 mb-4">
                 <img src={logoImg} alt="Foxpress Logo" className="w-8 h-8 object-contain" />
                 <div className="flex flex-col">
                   <span className="font-display font-bold text-cream text-lg leading-none tracking-widest">FOXPRESS</span>
                   <span className="font-display font-bold text-cream text-xs leading-none tracking-[0.3em] mt-1">STUDIOS</span>
                 </div>
               </Link>
-              <p className="text-muted text-sm leading-relaxed mt-2 max-w-xs mx-0">
+              <p className="text-muted text-sm leading-relaxed mt-2 max-w-xs mx-auto md:mx-0 text-center md:text-left">
                 Elevating stories. Inspiring the world.
               </p>
-              <div className="flex gap-3 mt-4 justify-start">
+              <div className="flex gap-3 mt-4 justify-center md:justify-start">
                 <a href="#" className="w-11 h-11 md:w-9 md:h-9 rounded-full border border-white/10 flex items-center justify-center text-muted hover:border-gold hover:text-gold transition-all duration-300">
                   <Facebook size={16} />
                 </a>
@@ -178,7 +178,7 @@ export default function Footer() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
               viewport={{ once: true }}
-              className="flex items-center justify-start gap-3"
+              className="flex items-center justify-center md:justify-start gap-3"
             >
               <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center flex-shrink-0">
                 <Mail size={14} className="text-gold" />
@@ -204,7 +204,7 @@ export default function Footer() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
               viewport={{ once: true }}
-              className="flex items-center justify-end gap-3"
+              className="flex items-center justify-center md:justify-end gap-3"
             >
               <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center flex-shrink-0">
                 <Phone size={14} className="text-gold" />
@@ -219,14 +219,14 @@ export default function Footer() {
 
         {/* Row 4 — Copyright bar */}
         <div className={`${containerClasses} py-4`}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 text-center">
-            <div className="text-left">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 text-center">
+            <div className="text-center md:text-left">
               <p className="text-muted text-xs">© 2026 Foxpress Studios. All rights reserved.</p>
             </div>
             <div className="text-center">
               <p className="text-gold/60 text-xs tracking-[0.2em] uppercase">Storytelling. Creativity. Impact.</p>
             </div>
-            <div className="text-right">
+            <div className="text-center md:text-right">
               <p className="text-muted text-xs">Crafted with passion in Pasadena, CA</p>
             </div>
           </div>

@@ -56,7 +56,7 @@ export default function Hero() {
       ></div>
 
       {/* Content wrapper */}
-      <div className="relative z-10 container-width-wide grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center min-h-screen pt-[16vh] lg:pt-[12vh] pb-16 md:pb-20">
+      <div className="relative z-10 container-width-wide grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-16 items-center min-h-screen pt-24 lg:pt-[12vh] pb-16 md:pb-20">
         {/* Left Side: hero-section.png */}
         <m.div
           initial={{ opacity: 0, x: -30 }}
