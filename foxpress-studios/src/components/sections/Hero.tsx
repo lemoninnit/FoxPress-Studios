@@ -1,16 +1,18 @@
 import { useEffect, useRef } from 'react'
-
+import { useNavigate } from 'react-router-dom'
 import { m } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import heroBg from '../../assets/hero-bg.jpg'
+import heroBg from '../../assets/hero-bg.mp4'
 import hermesAwards from '../../assets/icons/hermes-awards.png'
+import heroSectionImg from '../../assets/hero-section.png'
 import { LiquidButton } from '../ui/liquid-glass-button'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Hero() {
-  const bgRef = useRef<HTMLImageElement>(null)
+  const bgRef = useRef<HTMLVideoElement>(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (bgRef.current) {
@@ -32,32 +34,47 @@ export default function Hero() {
   }, [])
 
   return (
-    <section id="home" className="relative w-full min-h-screen overflow-hidden">
-      {/* Background image */}
-      <img 
+    <section id="home" className="relative w-full min-h-screen overflow-hidden border-b border-gold/30">
+      {/* Background video */}
+      <video
         ref={bgRef}
-        src={heroBg} 
-        alt="Foxpress Studios — Epic dragon battle visual" 
+        src={heroBg}
         className="absolute inset-0 w-full h-full object-cover object-top"
-        loading="eager"
-        fetchPriority="high"
-        decoding="async"
-        width={1920}
-        height={1080}
+        autoPlay
+        loop
+        muted
+        playsInline
       />
-      
+
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-hero-overlay"></div>
-      
+
       {/* Bottom fade */}
-      <div 
-        className="absolute bottom-0 left-0 right-0 h-32" 
+      <div
+        className="absolute bottom-0 left-0 right-0 h-32"
         style={{ background: 'linear-gradient(to top, #0A0A0A, transparent)' }}
       ></div>
 
       {/* Content wrapper */}
-      <div className="relative z-10 container-width flex flex-col justify-start min-h-screen pt-[22vh] md:pt-[28vh] pb-16 md:pb-20">
-        <div className="max-w-2xl">
+      <div className="relative z-10 container-width-wide grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center min-h-screen pt-[16vh] lg:pt-[12vh] pb-16 md:pb-20">
+        {/* Left Side: hero-section.png */}
+        <m.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="lg:col-span-3 flex justify-center lg:justify-start"
+        >
+          <img
+            src={heroSectionImg}
+            alt="The Magical Eggs on Dragon's Lair"
+            className="w-full max-w-[280px] sm:max-w-[340px] md:max-w-[400px] lg:max-w-[380px] h-auto object-contain drop-shadow-[0_15px_35px_rgba(0,0,0,0.6)]"
+            loading="eager"
+            fetchPriority="high"
+          />
+        </m.div>
+
+        {/* Right Side: Hero Content */}
+        <div className="lg:col-span-8 flex flex-col justify-center text-left">
           {/* Eyebrow */}
           <m.p
             initial={{ opacity: 0, y: 20 }}
@@ -94,9 +111,9 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.65 }}
-            className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-16"
+            className="flex flex-col sm:flex-row gap-3 md:gap-4"
           >
-            <LiquidButton 
+            <LiquidButton
               onClick={() => {
                 const el = document.getElementById('services');
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -105,11 +122,8 @@ export default function Hero() {
             >
               OUR SERVICES
             </LiquidButton>
-            <LiquidButton 
-              onClick={() => {
-                const el = document.getElementById('work');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
+            <LiquidButton
+              onClick={() => navigate('/work')}
               className="inline-flex items-center gap-2 px-6 py-4 border border-white/20 text-cream font-semibold text-sm tracking-widest uppercase bg-white/5 backdrop-blur-md shadow-[0_8px_32px_0_rgba(255,255,255,0.05),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:scale-[1.03] hover:brightness-115 hover:shadow-[0_0_25px_rgba(255,255,255,0.25)] transition-all duration-500 ease-out w-full sm:w-auto justify-center !h-auto !py-4"
             >
               OUR WORK

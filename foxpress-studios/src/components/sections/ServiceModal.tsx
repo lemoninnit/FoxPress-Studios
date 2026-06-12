@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
 import { m, AnimatePresence } from 'framer-motion'
-import { X, Video, Sparkles, Megaphone, CalendarDays, CheckCircle2 } from 'lucide-react'
+import { X, CheckCircle2 } from 'lucide-react'
 import BorderGlow from '../ui/BorderGlow'
+import ImagePlaceholder from '../ui/ImagePlaceholder'
 
-import whiteDragon from '../../assets/dragon-white.jpg'
-import blueDragon from '../../assets/dragon-blue.jpg'
-import battleScene from '../../assets/dragon-battle.jpg'
-import redDragon from '../../assets/dragon-red.jpg'
+import countriesServed from '../../assets/Countries Served.png'
+import projectsCompleted from '../../assets/Projects Completed.png'
+import creativeProfessionals from '../../assets/Creative Professionals.png'
+import industryAwards from '../../assets/Industry Awards.png'
 
 interface ServiceModalProps {
   isOpen: boolean
@@ -17,8 +18,7 @@ interface ServiceModalProps {
 const SERVICE_DATA = [
   {
     title: "Film & Video Productions",
-    icon: Video,
-    image: whiteDragon,
+    iconSrc: countriesServed,
     subtitle: "Premium Cinematic Content",
     description: "Our cinematic production team handles everything from scriptwriting and storyboarding to final filming and color grading. We specialize in producing premium TV commercials, trailers, brand documentaries, and corporate storytelling that captivates audiences.",
     capabilities: ["Cinematography & Directing", "Screenwriting & Storyboarding", "Color Grading & Editing", "Commercial Production"],
@@ -26,8 +26,7 @@ const SERVICE_DATA = [
   },
   {
     title: "CGI & Animation",
-    icon: Sparkles,
-    image: blueDragon,
+    iconSrc: projectsCompleted,
     subtitle: "Photorealistic 3D Artistry",
     description: "We create stunning 3D CGI characters, photorealistic product renderings, and environment animations that defy reality. Whether it is a creature sequence or a futuristic architecture simulation, our CGI artists deliver world-class animation.",
     capabilities: ["3D Character Animation", "Creature & Asset Rigging", "Fluid & FX Simulation", "Sub-surface Skin Rendering"],
@@ -35,8 +34,7 @@ const SERVICE_DATA = [
   },
   {
     title: "Publicity & Media Placement",
-    icon: Megaphone,
-    image: battleScene,
+    iconSrc: creativeProfessionals,
     subtitle: "High-Impact Press Campaigns",
     description: "Get your brand noticed by the right audience. We design custom PR campaigns, write compelling press releases, and secure media spots in top-tier digital and print publications to build credibility and multiply your reach.",
     capabilities: ["Press Release Distribution", "Targeted Media Pitching", "Brand Strategy Consulting", "Crisis PR & Reputation Management"],
@@ -44,8 +42,7 @@ const SERVICE_DATA = [
   },
   {
     title: "Events & Creative Campaigns",
-    icon: CalendarDays,
-    image: redDragon,
+    iconSrc: industryAwards,
     subtitle: "Experiential Digital Marketing",
     description: "Integrated marketing campaigns and experiential events that connect deeply with consumers. We combine physical brand events, online interactive experiences, social media teasers, and advertising campaigns to maximize conversions.",
     capabilities: ["Experiential Marketing Tours", "Interactive WebGL Experiences", "Social Media Teaser Suites", "Multi-platform Campaigns"],
@@ -75,7 +72,6 @@ export default function ServiceModal({ isOpen, onClose, initialServiceIndex = 0 
   }, [isOpen])
 
   const service = SERVICE_DATA[currentIndex]
-  const IconComponent = service.icon
 
   return (
     <AnimatePresence>
@@ -133,9 +129,10 @@ export default function ServiceModal({ isOpen, onClose, initialServiceIndex = 0 
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start text-left mb-8">
                   {/* Left Column: Image of Active Service (no cropping, aspect-video matching original) */}
                   <div className="md:col-span-7 relative aspect-video rounded-sm overflow-hidden border border-white/10">
-                    <img 
-                      src={service.image} 
-                      alt={service.title} 
+                    <ImagePlaceholder 
+                      title={service.title} 
+                      category={service.subtitle}
+                      index={currentIndex}
                       className="absolute inset-0 w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -145,7 +142,7 @@ export default function ServiceModal({ isOpen, onClose, initialServiceIndex = 0 
                   <div className="md:col-span-5 flex flex-col gap-4">
                     <div>
                       <span className="text-[10px] tracking-widest text-gold uppercase font-bold flex items-center gap-1.5">
-                        <IconComponent size={12} className="text-gold" />
+                        <img src={service.iconSrc} alt={service.title} className="w-3.5 h-3.5 object-contain" />
                         {service.subtitle}
                       </span>
                       <h4 className="text-xl font-display font-bold text-cream mt-0.5 uppercase">{service.title}</h4>
@@ -183,7 +180,6 @@ export default function ServiceModal({ isOpen, onClose, initialServiceIndex = 0 
                   <p className="text-[9px] tracking-widest text-gold/80 uppercase font-bold mb-3">SELECT A SERVICE CATEGORY</p>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {SERVICE_DATA.map((item, idx) => {
-                      const ButtonIcon = item.icon
                       return (
                         <button
                           key={item.title}
@@ -194,15 +190,17 @@ export default function ServiceModal({ isOpen, onClose, initialServiceIndex = 0 
                               : 'border-white/10 opacity-60 hover:opacity-95 hover:scale-[1.01] brightness-90'
                           }`}
                         >
-                          <img 
-                            src={item.image} 
-                            alt={item.title} 
+                          <ImagePlaceholder 
+                            title={item.title} 
+                            category={item.subtitle}
+                            index={idx}
+                            hideText={true}
                             className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           />
                           <div className="absolute inset-0 bg-black/65 group-hover:bg-black/55 transition-colors duration-300"></div>
                           <div className="absolute inset-0 p-2 flex flex-col justify-end">
                             <span className="text-[8px] text-gold font-bold tracking-wider uppercase flex items-center gap-1 mb-0.5">
-                              <ButtonIcon size={8} />
+                              <img src={item.iconSrc} alt={item.title} className="w-2.5 h-2.5 object-contain" />
                               {item.subtitle}
                             </span>
                             <span className="text-[10px] text-cream font-semibold truncate leading-tight uppercase">{item.title}</span>

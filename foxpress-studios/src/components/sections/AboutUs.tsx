@@ -1,11 +1,8 @@
 import { m } from 'framer-motion'
-import { TEAM } from '../../constants'
 import ShapeGrid from '../ui/ShapeGrid'
 import BorderGlow from '../ui/BorderGlow'
-import * as Icons from 'lucide-react'
-
-// Import assets
-import battleScene from '../../assets/dragon-battle.jpg'
+import ImagePlaceholder from '../ui/ImagePlaceholder'
+import InfiniteCarousel from '../ui/InfiniteCarousel'
 
 export default function AboutUs() {
   return (
@@ -24,7 +21,7 @@ export default function AboutUs() {
       </div>
 
       {/* Story & Mission Block */}
-      <div className="container-width grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10 mb-20">
+      <div className="container-width grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
         <m.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -74,9 +71,15 @@ export default function AboutUs() {
             className="w-full h-full border-only-glow"
           >
             <div className="relative w-full h-full overflow-hidden">
-              <img src={battleScene} alt="Our Creative Work" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105" />
+              <ImagePlaceholder 
+                title="Foxpress Studios" 
+                category="Creative Craftsmanship" 
+                index={2}
+                hideText={true}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105" 
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent"></div>
-              <div className="absolute bottom-4 left-4 right-4 text-left">
+              <div className="absolute bottom-4 left-4 right-4 text-left z-10">
                 <span className="text-[9px] tracking-widest text-gold uppercase font-bold">FOXPRESS STUDIOS</span>
                 <p className="text-cream text-xs font-semibold mt-0.5">Where creative imagination meets digital craftsmanship.</p>
               </div>
@@ -85,35 +88,16 @@ export default function AboutUs() {
         </m.div>
       </div>
 
-      {/* Team Profile Block */}
-      <div className="container-width text-center relative z-10">
-        <p className="section-eyebrow text-gold mb-4">THE TEAM</p>
-        <h2 className="section-title mb-6">CREATIVE PROFESSIONALS</h2>
-        <div className="gold-divider mx-auto mb-12"></div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
-          {TEAM.map((member, idx) => (
-            <m.div
-              key={member.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -6 }}
-              className="group relative rounded-sm border border-white/10 bg-black/40 p-4 transition-all duration-300 hover:border-gold/40 hover:shadow-[0_8px_30px_rgb(201,162,39,0.05)] cursor-pointer"
-            >
-              <div className="aspect-[4/5] rounded-sm overflow-hidden bg-white/5 border border-white/5 mb-4 relative">
-                <div className="absolute inset-0 flex items-center justify-center bg-gold/5">
-                  <Icons.User size={40} className="text-gold/20 group-hover:text-gold/40 transition-colors duration-300" />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-              </div>
-              <h4 className="font-display font-bold text-cream text-sm uppercase tracking-wide group-hover:text-gold transition-colors">{member.name}</h4>
-              <p className="text-gold text-[10px] tracking-widest uppercase font-semibold mt-1">{member.role}</p>
-            </m.div>
-          ))}
-        </div>
-      </div>
+      {/* Infinite Carousel Animation */}
+      <m.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        viewport={{ once: true }}
+        className="relative z-10 mt-16 md:mt-24"
+      >
+        <InfiniteCarousel />
+      </m.div>
     </section>
   )
 }

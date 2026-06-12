@@ -1,34 +1,32 @@
 import { useState } from 'react'
 import { m } from 'framer-motion'
-import * as Icons from 'lucide-react'
 import { SERVICES } from '../../constants'
 import ShapeGrid from '../ui/ShapeGrid'
 import BorderGlow from '../ui/BorderGlow'
 import ServiceModal from './ServiceModal'
-import whiteDragon from '../../assets/dragon-white.jpg'
-import blueDragon from '../../assets/dragon-blue.jpg'
-import battleScene from '../../assets/dragon-battle.jpg'
-import redDragon from '../../assets/dragon-red.jpg'
+import ImagePlaceholder from '../ui/ImagePlaceholder'
 
-const SERVICE_IMAGES = [
-  whiteDragon,
-  blueDragon,
-  battleScene,
-  redDragon,
+import countriesServed from '../../assets/Countries Served.png'
+import projectsCompleted from '../../assets/Projects Completed.png'
+import creativeProfessionals from '../../assets/Creative Professionals.png'
+import industryAwards from '../../assets/Industry Awards.png'
+
+const SERVICE_ICONS = [
+  countriesServed,
+  projectsCompleted,
+  creativeProfessionals,
+  industryAwards,
 ]
 
 interface ServiceCardProps {
   title: string
   desc: string
-  icon: string
-  image: string
+  iconSrc: string
   index: number
   onClick?: () => void
 }
 
-function ServiceCard({ title, desc, icon, image, onClick }: ServiceCardProps) {
-  const IconComponent = Icons[icon as keyof typeof Icons] as React.ElementType
-
+function ServiceCard({ title, desc, iconSrc, index, onClick }: ServiceCardProps) {
   return (
     <m.div
       variants={{
@@ -53,14 +51,11 @@ function ServiceCard({ title, desc, icon, image, onClick }: ServiceCardProps) {
         className="w-full h-full border-0"
       >
         <div className="relative w-full h-full overflow-hidden">
-          <img 
-            src={image} 
-            alt={title} 
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105" 
-            loading="lazy"
-            decoding="async"
-            width={600}
-            height={450}
+          <ImagePlaceholder 
+            title={title}
+            index={index}
+            hideText={true}
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
           />
           <div 
             className="absolute inset-0" 
@@ -68,8 +63,8 @@ function ServiceCard({ title, desc, icon, image, onClick }: ServiceCardProps) {
           ></div>
           <div className="absolute bottom-0 left-0 right-0 p-3 md:p-5 z-10 flex flex-col justify-end">
             <div className="mb-3">
-              <div className="w-9 h-9 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center group-hover:bg-gold/20 transition-all duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)]">
-                <IconComponent size={16} className="text-gold" aria-hidden="true" />
+              <div className="w-9 h-9 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center group-hover:bg-gold/20 transition-all duration-500 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] p-1.5">
+                <img src={iconSrc} alt={title} className="w-full h-full object-contain" aria-hidden="true" />
               </div>
             </div>
             <h3 className="text-cream font-display font-bold text-xs md:text-sm uppercase tracking-wide mb-2">
@@ -157,8 +152,7 @@ export default function Services() {
               <ServiceCard 
                 title={service.title}
                 desc={service.desc}
-                icon={service.icon}
-                image={SERVICE_IMAGES[index]}
+                iconSrc={SERVICE_ICONS[index]}
                 index={index}
                 onClick={() => handleOpenService(index)}
               />

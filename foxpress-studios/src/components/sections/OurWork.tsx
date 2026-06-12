@@ -7,17 +7,7 @@ import ShapeGrid from '../ui/ShapeGrid'
 import BorderGlow from '../ui/BorderGlow'
 import ProjectModal from './ProjectModal'
 
-import whiteDragon from '../../assets/dragon-white.jpg'
-import blueDragon from '../../assets/dragon-blue.jpg'
-import battleScene from '../../assets/dragon-battle.jpg'
-import redDragon from '../../assets/dragon-red.jpg'
-
-const PROJECT_IMAGES = [
-  whiteDragon,
-  blueDragon,
-  battleScene,
-  redDragon,
-]
+import ImagePlaceholder from '../ui/ImagePlaceholder'
 
 export default function OurWork() {
   const [projectModalOpen, setProjectModalOpen] = useState(false)
@@ -113,12 +103,12 @@ export default function OurWork() {
               >
                 <div className="relative w-full h-full overflow-hidden">
                   {/* Image */}
-                  <img
-                    src={PROJECT_IMAGES[index]}
-                    alt={project.title}
+                  <ImagePlaceholder
+                    title={project.title}
+                    category={project.category}
+                    index={index}
+                    hideText={true}
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1200ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
-                    loading="lazy"
-                    decoding="async"
                   />
 
                   {/* Overlay Gradient */}

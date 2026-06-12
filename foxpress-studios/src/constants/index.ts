@@ -1,20 +1,12 @@
-import type { NavLink, Stat, Service, Testimonial, NewsPost, TeamMember, Award, Project } from '../types';
+import type { NavLink, Service, Testimonial, TeamMember, Award, Project } from '../types';
 
 export const NAV_LINKS: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/#services" },
-  { label: "Our Work", href: "/#work" },
-  { label: "About Us", href: "/#about" },
-  { label: "Awards", href: "/#awards" },
-  { label: "News", href: "/#news" },
+  { label: "Our Work", href: "/work" },
+  { label: "About Us", href: "/about" },
+  { label: "Awards", href: "/awards" },
   { label: "Contact Us", href: "#contact" }
-];
-
-export const STATS: Stat[] = [
-  { icon: 'Trophy', value: 20, suffix: '+', label: 'Industry Awards' },
-  { icon: 'Clapperboard', value: 500, suffix: '+', label: 'Projects Completed' },
-  { icon: 'Globe', value: 30, suffix: '+', label: 'Countries Served' },
-  { icon: 'Users', value: 100, suffix: '+', label: 'Creative Professionals' },
 ];
 
 export const SERVICES: Service[] = [
@@ -35,13 +27,6 @@ export const TEAM: TeamMember[] = [
   { name: "Chrstyle Osigan", role: "Head of CGI & Visual Effects" },
   { name: "Lenon Lee Natividad", role: "Director of Film Production" },
   { name: "Sakai Moka", role: "VP of Publicity & Media Placement" }
-];
-
-export const NEWS: NewsPost[] = [
-  { title: "Foxpress Studios Secures Double Platinum at Hermes Creative Awards", date: "June 2026", summary: "Foxpress Studios has been recognized with two Platinum Awards at the 2026 Hermes Creative Awards for outstanding achievement in creative direction and video production." },
-  { title: "Behind the CGI: The Making of Ethereal Ascension", date: "May 2026", summary: "A deep dive into the technology, artistry, and vision behind the virtual worlds and stunning character animation of our latest award-winning production." },
-  { title: "Foxpress Launches Pasadena Creative Production Suite", date: "April 2026", summary: "Announcing the official opening of our brand-new, state-of-the-art LA production hub, housing cutting-edge editing, color grading, and CGI rendering facilities." },
-  { title: "The Power of Branded Storytelling in the Digital Era", date: "March 2026", summary: "How brands can cut through the noise by investing in premium visual stories, cinematic campaigns, and strategic media placements that truly resonate with audiences." }
 ];
 
 export const AWARDS: Award[] = [

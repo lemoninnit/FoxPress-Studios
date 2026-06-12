@@ -72,7 +72,7 @@ export default function Footer() {
     }
   }
 
-  const containerClasses = "container-width"
+  const containerClasses = "container-width-wide"
 
   return (
     <>

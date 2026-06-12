@@ -160,7 +160,7 @@ for (const [filepath, content] of Object.entries(files)) {
 const mediaFiles = [
   { path: path.join(publicDir, 'favicon.ico'), content: '' },
   { path: path.join(publicDir, 'og-image.jpg'), content: '' },
-  { path: path.join(src, 'assets/images/hero-bg.jpg'), content: '' },
+  { path: path.join(src, 'assets/images/hero-bg.mp4'), content: '' },
   { path: path.join(src, 'assets/images/hero-bg.webp'), content: '' },
   { path: path.join(src, 'assets/images/dragon-white.jpg'), content: '' },
   { path: path.join(src, 'assets/images/dragon-blue.jpg'), content: '' },
@@ -180,7 +180,7 @@ const oldComponents = ['Navbar.tsx', 'Hero.tsx', 'Stats.tsx', 'Services.tsx', 'F
 for (const file of oldComponents) {
   try {
     fs.unlinkSync(path.join(src, 'components', file));
-  } catch(e) {}
+  } catch (e) { }
 }
 
 console.log('scaffolding complete');

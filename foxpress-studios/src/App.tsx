@@ -8,15 +8,14 @@ import Hero from './components/sections/Hero'
 import SEO from './components/ui/SEO'
 import ContactModal from './components/sections/ContactModal'
 
-const Stats        = lazy(() => import('./components/sections/Stats'))
-const Services     = lazy(() => import('./components/sections/Services'))
-const OurWork      = lazy(() => import('./components/sections/OurWork'))
-const Awards       = lazy(() => import('./components/sections/Awards'))
+const Services = lazy(() => import('./components/sections/Services'))
 const Testimonials = lazy(() => import('./components/sections/Testimonials'))
-const AboutUs      = lazy(() => import('./components/sections/AboutUs'))
-const News         = lazy(() => import('./components/sections/News'))
-const Contact      = lazy(() => import('./components/sections/Contact'))
-const Footer       = lazy(() => import('./components/layout/Footer'))
+const Contact = lazy(() => import('./components/sections/Contact'))
+const Footer = lazy(() => import('./components/layout/Footer'))
+
+const AboutPage = lazy(() => import('./pages/AboutPage'))
+const OurWorkPage = lazy(() => import('./pages/OurWorkPage'))
+const AwardsPage = lazy(() => import('./pages/AwardsPage'))
 
 function SectionSkeleton() {
   return (
@@ -35,13 +34,8 @@ function Home() {
     <>
       <Hero />
       <Suspense fallback={<SectionSkeleton />}>
-        <Stats />
         <Services />
-        <OurWork />
         <Testimonials />
-        <AboutUs />
-        <Awards />
-        <News />
         <Contact />
       </Suspense>
     </>
@@ -77,6 +71,12 @@ function App() {
     }
   }, [pathname, hash])
 
+  useEffect(() => {
+    if (!hash) {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
+
   return (
     <HelmetProvider>
       <SEO />
@@ -85,9 +85,10 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/about" element={<Navigate to="/#about" replace />} />
-            <Route path="/awards" element={<Navigate to="/#awards" replace />} />
-            <Route path="/news" element={<Navigate to="/#news" replace />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/work" element={<OurWorkPage />} />
+            <Route path="/awards" element={<AwardsPage />} />
+            <Route path="/news" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
         <Suspense fallback={null}>

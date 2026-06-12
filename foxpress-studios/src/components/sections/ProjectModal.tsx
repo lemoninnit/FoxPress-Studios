@@ -2,11 +2,7 @@ import { useState, useEffect } from 'react'
 import { m, AnimatePresence } from 'framer-motion'
 import { X, Calendar, User, Cpu } from 'lucide-react'
 import BorderGlow from '../ui/BorderGlow'
-
-import whiteDragon from '../../assets/dragon-white.jpg'
-import blueDragon from '../../assets/dragon-blue.jpg'
-import battleScene from '../../assets/dragon-battle.jpg'
-import redDragon from '../../assets/dragon-red.jpg'
+import ImagePlaceholder from '../ui/ImagePlaceholder'
 
 interface ProjectModalProps {
   isOpen: boolean
@@ -18,7 +14,6 @@ const PROJECT_DATA = [
   {
     title: "Ethereal Ascension",
     category: "CGI & Animation",
-    image: whiteDragon,
     client: "Epic Games",
     date: "January 2026",
     tech: "Unreal Engine 5, Houdini, Substance Painter",
@@ -27,7 +22,6 @@ const PROJECT_DATA = [
   {
     title: "Crimson Skies",
     category: "Film Production",
-    image: blueDragon,
     client: "Paramount Pictures",
     date: "November 2025",
     tech: "RED V-Raptor, Cooke Anamorphic, DaVinci Resolve",
@@ -36,7 +30,6 @@ const PROJECT_DATA = [
   {
     title: "The Frost King",
     category: "Visual Effects",
-    image: battleScene,
     client: "Warner Bros",
     date: "July 2025",
     tech: "Nuke, Maya, Arnold Renderer, Deep Compositing",
@@ -45,7 +38,6 @@ const PROJECT_DATA = [
   {
     title: "Battle of the Ancients",
     category: "Creative Campaign",
-    image: redDragon,
     client: "Tencent Games",
     date: "March 2025",
     tech: "React, WebGL, Adobe Premiere Pro, After Effects",
@@ -132,9 +124,10 @@ export default function ProjectModal({ isOpen, onClose, initialProjectIndex = 0 
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start text-left mb-8">
                   {/* Left Column: Image of Active Project */}
                   <div className="md:col-span-7 relative aspect-video rounded-sm overflow-hidden border border-white/10">
-                    <img 
-                      src={project.image} 
-                      alt={project.title} 
+                    <ImagePlaceholder 
+                      title={project.title} 
+                      category={project.category}
+                      index={currentIndex}
                       className="absolute inset-0 w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -186,9 +179,11 @@ export default function ProjectModal({ isOpen, onClose, initialProjectIndex = 0 
                             : 'border-white/10 opacity-60 hover:opacity-95 hover:scale-[1.01] brightness-90'
                         }`}
                       >
-                        <img 
-                          src={item.image} 
-                          alt={item.title} 
+                        <ImagePlaceholder 
+                          title={item.title} 
+                          category={item.category}
+                          index={idx}
+                          hideText={true}
                           className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 bg-black/65 group-hover:bg-black/55 transition-colors duration-300"></div>
