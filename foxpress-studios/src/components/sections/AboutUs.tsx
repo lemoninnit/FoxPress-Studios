@@ -9,8 +9,8 @@ export default function AboutUs() {
     <section id="about" className="w-full bg-black section-padding relative overflow-hidden border-t border-white/5 scroll-mt-20">
       {/* Background ShapeGrid */}
       <div className="absolute inset-0 pointer-events-none opacity-20 z-0">
-        <ShapeGrid 
-          speed={0.5} 
+        <ShapeGrid
+          speed={0.5}
           squareSize={40}
           direction='diagonal'
           borderColor='rgba(201, 162, 39, 0.15)'
@@ -34,7 +34,7 @@ export default function AboutUs() {
             ELEVATING STORIES. INSPIRING THE WORLD.
           </h2>
           <p className="text-cream/60 text-sm leading-relaxed">
-            Founded in Pasadena, California, Foxpress Studios was built on a simple premise: every project deserves to be told with cinematic scale and meticulous craftsmanship. Whether developing CGI assets for video games, directing commercials, or launching targeted publicity campaigns, our team approaches every task with creative passion and technical rigor.
+            Founded in Slough, Berkshire, England, Foxpress Studios was built on a simple premise: every project deserves to be told with cinematic scale and meticulous craftsmanship. Whether developing CGI assets for video games, directing commercials, or launching targeted publicity campaigns, our team approaches every task with creative passion and technical rigor.
           </p>
           <p className="text-cream/60 text-sm leading-relaxed">
             We operate at the intersection of technology and art, utilizing advanced rendering pipelines and digital distribution methods to ensure our partners' stories reach the right audiences at the highest possible fidelity.

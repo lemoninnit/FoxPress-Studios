@@ -80,7 +80,7 @@ export default function Navbar({ onContactClick }: NavbarProps) {
             </div>
           </Link>
         </div>
-        
+
         {/* Center: Navigation Links */}
         <div className="flex items-center justify-center gap-1.5 sm:gap-3 lg:gap-5 xl:gap-8">
           {navLinksToRender.map((link) => (
@@ -102,7 +102,7 @@ export default function Navbar({ onContactClick }: NavbarProps) {
 
         {/* Right: CTA Button */}
         <div className="flex-1 flex justify-end items-center gap-2 sm:gap-4 shrink-0">
-          <LiquidButton 
+          <LiquidButton
             onClick={onContactClick}
             className="border border-gold/45 text-gold text-[8px] sm:text-[10px] lg:text-xs tracking-wider lg:tracking-widest uppercase px-2.5 sm:px-4 lg:px-6 py-1.5 sm:py-2.5 lg:py-3 bg-gold/15 backdrop-blur-md shadow-[0_8px_32px_0_rgba(201,162,39,0.1),inset_0_1px_1px_rgba(255,255,255,0.25)] hover:scale-[1.03] hover:brightness-115 hover:shadow-[0_0_25px_rgba(201,162,39,0.35)] transition-all duration-500 ease-out !h-auto !py-1.5 sm:!py-2.5 lg:!py-3 !rounded-sm whitespace-nowrap"
           >
