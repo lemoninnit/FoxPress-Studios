@@ -32,7 +32,7 @@ export const PROJECT_IMAGES = [
 export const NAV_LINKS: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
-  { label: "Our Work", href: "/work" },
+  { label: "Our Works", href: "/work" },
   { label: "About Us", href: "/about" },
   { label: "Awards", href: "/awards" },
   { label: "Contact Us", href: "#contact" }
