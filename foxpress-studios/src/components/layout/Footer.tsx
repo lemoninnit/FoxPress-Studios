@@ -50,7 +50,7 @@ export default function Footer() {
         <div className={`${containerClasses} pt-10 pb-4`}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             {/* Column 1 */}
-            <m.div 
+            <m.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0 * 0.1 }}
@@ -135,7 +135,7 @@ export default function Footer() {
         {/* Row 2 — Contact info block */}
         <div className={`${containerClasses} pb-6`}>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            <m.div 
+            <m.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
@@ -147,8 +147,8 @@ export default function Footer() {
               </div>
               <span className="text-muted text-sm">studios@foxpressmedia.com</span>
             </m.div>
-            
-            <m.div 
+
+            <m.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
@@ -158,10 +158,10 @@ export default function Footer() {
               <div className="w-8 h-8 rounded-full bg-gold/10 flex items-center justify-center flex-shrink-0">
                 <MapPin size={14} className="text-gold" />
               </div>
-              <span className="text-muted text-sm">45 S Arroyo Pkwy, Pasadena, CA</span>
+              <span className="text-muted text-sm">Founded in Slough, Berkshire, England</span>
             </m.div>
-            
-            <m.div 
+
+            <m.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
@@ -189,7 +189,7 @@ export default function Footer() {
               <p className="text-gold/60 text-xs tracking-[0.2em] uppercase">Storytelling. Creativity. Impact.</p>
             </div>
             <div className="text-center md:text-right">
-              <p className="text-muted text-xs">Crafted with passion in Pasadena, CA</p>
+              <p className="text-muted text-xs">The Future Workds 2 Brunel Way Slough, SL1 1FQ</p>
             </div>
           </div>
         </div>
@@ -204,7 +204,7 @@ export default function Footer() {
             exit={{ opacity: 0, scale: 0.8 }}
             className="fixed bottom-6 right-6 z-50"
           >
-            <button 
+            <button
               onClick={scrollToTop}
               className="w-10 h-10 rounded-full bg-gold flex items-center justify-center shadow-gold cursor-pointer hover:bg-gold-light transition-all duration-300 border-none outline-none"
               aria-label="Scroll to top"
