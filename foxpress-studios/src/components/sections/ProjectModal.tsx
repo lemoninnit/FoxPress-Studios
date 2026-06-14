@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { m, AnimatePresence } from 'framer-motion'
 import { X, Calendar, User, Cpu, ChevronLeft, ChevronRight } from 'lucide-react'
 import BorderGlow from '../ui/BorderGlow'
-import { PROJECT_IMAGES } from '../../constants'
+import { PROJECTS } from '../../constants'
 
 interface ProjectModalProps {
   isOpen: boolean
@@ -11,68 +11,7 @@ interface ProjectModalProps {
   showAllProjects?: boolean
 }
 
-const PROJECT_DATA = [
-  {
-    title: "Split Sceen INTRO",
-    category: "Dr. Anna Aragno",
-    imageSrc: PROJECT_IMAGES[0],
-    videoSrc: "https://www.youtube.com/embed/q53x16txh4o",
-    client: "Dr. Anna Aragno",
-    date: "June 2026",
-    tech: "Creative Editing, Motion Graphics",
-    description: "An elegant, stylized intro sequence showing creative direction and high-end video compilation methods."
-  },
-  {
-    title: "The Magical Eggs On Dragon's Lair Ep. 1",
-    category: "Georgina Sano",
-    imageSrc: PROJECT_IMAGES[1],
-    videoSrc: "https://www.youtube.com/embed/XDcrGFg98Qk",
-    client: "Georgina Sano",
-    date: "May 2026",
-    tech: "CGI, Animation, Unreal Engine",
-    description: "Episode 1 of 'The Magical Eggs On Dragon's Lair' series. This fantasy project combines high-quality character animation and complex lighting rigs to bring the magical dragon eggs to life."
-  },
-  {
-    title: "The Magic Wine Cup Teaser",
-    category: "Helene Meyers",
-    imageSrc: PROJECT_IMAGES[2],
-    videoSrc: "https://www.youtube.com/embed/JTOwZr8IOI8",
-    client: "Helene Meyers",
-    date: "April 2026",
-    tech: "Cinematography, Visual Tone, Sound Editing",
-    description: "Teaser video for 'The Magic Wine Cup & Other Jewish Plays'. This dramatic trailer establishes the mysterious and magical atmosphere of the upcoming theatrical adaptation."
-  },
-  {
-    title: "Cong Catchers Teaser",
-    category: "Lee Halverson",
-    imageSrc: PROJECT_IMAGES[3],
-    videoSrc: "https://www.youtube.com/embed/EO3y0fWjGJE",
-    client: "Lee Halverson",
-    date: "March 2026",
-    tech: "Sound Design, Editing, Creative Campaign",
-    description: "High-impact teaser campaign trailer showcasing fast cuts, stylized typography, and professional action-oriented sound design."
-  },
-  {
-    title: "Destined To Live 9 Lives Teaser",
-    category: "Phyllis Duke",
-    imageSrc: PROJECT_IMAGES[4],
-    videoSrc: "https://www.youtube.com/embed/M08SGI8QHt8",
-    client: "Phyllis Duke",
-    date: "February 2026",
-    tech: "Cinematography, Visual Effects, Editing",
-    description: "An evocative teaser for 'Destined To Live 9 Lives' showcasing dramatic visual pacing, rich color grading, and compelling narrative structure."
-  },
-  {
-    title: "A Redeemed Soul's Journey Teaser",
-    category: "Walter Scarborough",
-    imageSrc: PROJECT_IMAGES[5],
-    videoSrc: "https://www.youtube.com/embed/SU8T6DDv72Q",
-    client: "Walter Scarborough",
-    date: "January 2026",
-    tech: "Creative Editing, Sound Design, Motion Graphics",
-    description: "A high-impact cinematic teaser tracking a spiritual and emotional journey, featuring expert audio integration and evocative motion graphics."
-  }
-]
+const PROJECT_DATA = PROJECTS
 
 export default function ProjectModal({ 
   isOpen, 
@@ -101,6 +40,29 @@ export default function ProjectModal({
     }
   }, [isOpen])
 
+  // Auto-scroll active item into view inside the carousel
+  useEffect(() => {
+    if (isOpen && showAllProjects && scrollRef.current) {
+      const timer = setTimeout(() => {
+        const container = scrollRef.current
+        if (!container) return
+        const activeElement = container.children[currentIndex] as HTMLElement
+        if (activeElement) {
+          const containerWidth = container.clientWidth
+          const elementOffsetLeft = activeElement.offsetLeft
+          const elementWidth = activeElement.clientWidth
+          const targetScroll = elementOffsetLeft - (containerWidth / 2) + (elementWidth / 2)
+          
+          container.scrollTo({
+            left: targetScroll,
+            behavior: 'smooth'
+          })
+        }
+      }, 100)
+      return () => clearTimeout(timer)
+    }
+  }, [isOpen, currentIndex, showAllProjects])
+
   const scrollLeft = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({ left: -260, behavior: 'smooth' })
@@ -114,6 +76,7 @@ export default function ProjectModal({
   }
 
   const project = PROJECT_DATA[currentIndex] || PROJECT_DATA[0]
+  const videoSrc = `https://www.youtube.com/embed/${project.youtubeId}`
 
   return (
     <AnimatePresence>
@@ -172,8 +135,8 @@ export default function ProjectModal({
                   {/* Left Column: Video of Active Project */}
                   <div className="md:col-span-7 relative aspect-video rounded-sm overflow-hidden border border-white/10 bg-black">
                     <iframe
-                      key={project.videoSrc}
-                      src={project.videoSrc}
+                      key={videoSrc}
+                      src={videoSrc}
                       title={project.title}
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -257,9 +220,15 @@ export default function ProjectModal({
                             }`}
                           >
                             <img
-                              src={item.imageSrc}
+                              src={`https://img.youtube.com/vi/${item.youtubeId}/maxresdefault.jpg`}
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                if (!target.src.includes('hqdefault.jpg')) {
+                                  target.src = `https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg`;
+                                }
+                              }}
                               alt={item.title}
-                              className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                              className="absolute inset-0 w-full h-full object-cover object-center scale-[1.15] transition-transform duration-500 group-hover:scale-[1.20]"
                             />
                             <div className="absolute inset-0 bg-black/65 group-hover:bg-black/55 transition-colors duration-300"></div>
                             <div className="absolute inset-0 p-2 flex flex-col justify-end">
@@ -292,9 +261,15 @@ export default function ProjectModal({
                           }`}
                         >
                           <img
-                            src={item.imageSrc}
+                            src={`https://img.youtube.com/vi/${item.youtubeId}/maxresdefault.jpg`}
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              if (!target.src.includes('hqdefault.jpg')) {
+                                target.src = `https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg`;
+                              }
+                            }}
                             alt={item.title}
-                            className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                            className="absolute inset-0 w-full h-full object-cover object-center scale-[1.15] transition-transform duration-500 group-hover:scale-[1.20]"
                           />
                           <div className="absolute inset-0 bg-black/65 group-hover:bg-black/55 transition-colors duration-300"></div>
                           <div className="absolute inset-0 p-2 flex flex-col justify-end">

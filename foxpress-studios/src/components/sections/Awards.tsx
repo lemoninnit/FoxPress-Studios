@@ -6,6 +6,7 @@ import BorderGlow from '../ui/BorderGlow'
 
 // Import assets
 import hermesAwardsImg from '../../assets/icons/hermes-awards.png'
+import viddyAwardsImg from '../../assets/icons/viddy-awards.png'
 
 export default function Awards() {
   return (
@@ -23,36 +24,101 @@ export default function Awards() {
         />
       </div>
 
-      {/* Spotlight Showcase */}
-      <div className="container-width grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20 relative z-10">
-        <m.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="relative rounded-sm overflow-hidden border border-white/10 bg-black/60 p-6 flex items-center justify-center min-h-[300px]"
-        >
-          <div className="absolute inset-0 bg-gold/5 pointer-events-none"></div>
-          <img src={hermesAwardsImg} alt="Hermes Creative Awards" className="max-h-[280px] object-contain relative z-10 filter drop-shadow-[0_0_35px_rgba(201,162,39,0.25)]" />
-        </m.div>
+      {/* Spotlight Showcase Container */}
+      <div className="container-width space-y-20 mb-20 relative z-10">
+        {/* Viddy Awards Spotlight */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <m.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="w-full"
+          >
+            <BorderGlow
+              edgeSensitivity={30}
+              glowColor="45 80% 50%"
+              backgroundColor="#0a0a0a"
+              borderRadius={2}
+              glowRadius={40}
+              glowIntensity={1.0}
+              coneSpread={25}
+              animated={false}
+              colors={['#c9a227', '#e5c043', '#8e6d12']}
+              className="w-full min-h-[300px] border-0"
+            >
+              <div className="relative p-6 flex items-center justify-center min-h-[300px]">
+                <div className="absolute inset-0 bg-gold/5 pointer-events-none"></div>
+                <img src={viddyAwardsImg} alt="Viddy Awards" className="max-h-[280px] object-contain relative z-10 filter drop-shadow-[0_0_35px_rgba(201,162,39,0.25)]" />
+              </div>
+            </BorderGlow>
+          </m.div>
 
-        <m.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-left space-y-6"
-        >
-          <span className="text-[10px] tracking-widest text-gold uppercase font-bold">FEATURED RECOGNITION</span>
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-cream uppercase">HERMES CREATIVE AWARDS 2026</h2>
-          <div className="w-12 h-[2px] bg-gold"></div>
-          <p className="text-cream/60 text-sm leading-relaxed">
-            We are honored to receive multiple Platinum honors at the 2026 Hermes Creative Awards. The Hermes Creative Awards is one of the largest and oldest creative competitions in the world, recognizing the creative industry's best publications, branding collateral, websites, videos, and advertising programs.
-          </p>
-          <p className="text-cream/60 text-sm leading-relaxed">
-            Our winning campaign, <strong>"Ethereal Ascension"</strong>, was praised for its boundary-pushing CGI integration, cinematic flow, and high emotional resonance.
-          </p>
-        </m.div>
+          <m.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-left space-y-6"
+          >
+            <span className="text-[10px] tracking-widest text-gold uppercase font-bold">FEATURED RECOGNITION</span>
+            <h2 className="text-2xl md:text-3xl font-display font-bold text-cream uppercase">VIDDY AWARDS 2026</h2>
+            <div className="w-12 h-[2px] bg-gold"></div>
+            <p className="text-cream/60 text-sm leading-relaxed">
+              We are proud to announce that FoxPress Studios has been honored with the Platinum Winner award at the 2026 Viddy Awards. The Viddy Awards is one of the most prestigious competitions in the digital industry, celebrating excellence in video production, digital communications, and web technology across the globe.
+            </p>
+            <p className="text-cream/60 text-sm leading-relaxed">
+              Our winning submissions showcased exceptional editing precision, visual effects mastery, and narrative execution, reflecting our studio's core commitment to premium content creation.
+            </p>
+          </m.div>
+        </div>
+
+        {/* Hermes Awards Spotlight */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <m.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="w-full"
+          >
+            <BorderGlow
+              edgeSensitivity={30}
+              glowColor="45 80% 50%"
+              backgroundColor="#0a0a0a"
+              borderRadius={2}
+              glowRadius={40}
+              glowIntensity={1.0}
+              coneSpread={25}
+              animated={false}
+              colors={['#c9a227', '#e5c043', '#8e6d12']}
+              className="w-full min-h-[300px] border-0"
+            >
+              <div className="relative p-6 flex items-center justify-center min-h-[300px]">
+                <div className="absolute inset-0 bg-gold/5 pointer-events-none"></div>
+                <img src={hermesAwardsImg} alt="Hermes Creative Awards" className="max-h-[280px] object-contain relative z-10 filter drop-shadow-[0_0_35px_rgba(201,162,39,0.25)]" />
+              </div>
+            </BorderGlow>
+          </m.div>
+
+          <m.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-left space-y-6"
+          >
+            <span className="text-[10px] tracking-widest text-gold uppercase font-bold">FEATURED RECOGNITION</span>
+            <h2 className="text-2xl md:text-3xl font-display font-bold text-cream uppercase">HERMES CREATIVE AWARDS 2026</h2>
+            <div className="w-12 h-[2px] bg-gold"></div>
+            <p className="text-cream/60 text-sm leading-relaxed">
+              We are honored to receive multiple Platinum honors at the 2026 Hermes Creative Awards. The Hermes Creative Awards is one of the largest and oldest creative competitions in the world, recognizing the creative industry's best publications, branding collateral, websites, videos, and advertising programs.
+            </p>
+            <p className="text-cream/60 text-sm leading-relaxed">
+              Our winning campaign, <strong>"Ethereal Ascension"</strong>, was praised for its boundary-pushing CGI integration, cinematic flow, and high emotional resonance.
+            </p>
+          </m.div>
+        </div>
       </div>
 
       {/* Awards Matrix Grid */}

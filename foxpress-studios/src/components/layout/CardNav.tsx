@@ -1,4 +1,5 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ArrowUpRight } from 'lucide-react'
 import './CardNav.css'
@@ -26,9 +27,8 @@ interface CardNavProps {
   ease?: string
   baseColor?: string
   menuColor?: string
-  buttonBgColor?: string
-  buttonTextColor?: string
   onCtaClick?: () => void
+  onLogoClick?: () => void
 }
 
 const CardNav = ({
@@ -39,15 +39,23 @@ const CardNav = ({
   ease = 'power3.out',
   baseColor = '#080808',
   menuColor,
-  buttonBgColor,
-  buttonTextColor,
-  onCtaClick
+  onCtaClick,
+  onLogoClick
 }: CardNavProps) => {
   const [isHamburgerOpen, setIsHamburgerOpen] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
   const navRef = useRef<HTMLDivElement>(null)
   const cardsRef = useRef<HTMLDivElement[]>([])
   const tlRef = useRef<gsap.core.Timeline | null>(null)
+  const location = useLocation()
+
+  useEffect(() => {
+    setIsHamburgerOpen(false)
+    setIsExpanded(false)
+    if (navRef.current) {
+      gsap.set(navRef.current, { height: 60 })
+    }
+  }, [location.pathname])
 
   const calculateHeight = () => {
     const navEl = navRef.current
@@ -109,6 +117,13 @@ const CardNav = ({
     const tl = createTimeline()
     tlRef.current = tl
 
+    if (isExpanded && isHamburgerOpen) {
+      const currentHeight = calculateHeight()
+      gsap.set(navRef.current, { height: currentHeight })
+      gsap.set(cardsRef.current, { y: 0, opacity: 1 })
+      tl?.progress(1)
+    }
+
     return () => {
       tl?.kill()
       tlRef.current = null
@@ -120,7 +135,7 @@ const CardNav = ({
     const handleResize = () => {
       if (!tlRef.current) return
 
-      if (isExpanded) {
+      if (isExpanded && isHamburgerOpen) {
         const newHeight = calculateHeight()
         gsap.set(navRef.current, { height: newHeight })
 
@@ -144,6 +159,24 @@ const CardNav = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isExpanded])
 
+  useEffect(() => {
+    if (!isExpanded) return
+
+    const handleScroll = () => {
+      const tl = tlRef.current
+      if (tl) {
+        setIsHamburgerOpen(false)
+        tl.eventCallback('onReverseComplete', () => setIsExpanded(false))
+        tl.reverse()
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [isExpanded])
+
   const toggleMenu = () => {
     const tl = tlRef.current
     if (!tl) return
@@ -155,6 +188,15 @@ const CardNav = ({
       setIsHamburgerOpen(false)
       tl.eventCallback('onReverseComplete', () => setIsExpanded(false))
       tl.reverse()
+    }
+  }
+
+  const handleLogoClick = () => {
+    if (isExpanded) {
+      toggleMenu()
+    }
+    if (onLogoClick) {
+      onLogoClick()
     }
   }
 
@@ -178,7 +220,18 @@ const CardNav = ({
             <div className="hamburger-line" />
           </div>
 
-          <div className="logo-container">
+          <div
+            className="logo-container cursor-pointer"
+            onClick={handleLogoClick}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                handleLogoClick()
+              }
+            }}
+          >
             <div className="flex items-center gap-2">
               <img src={logo} alt={logoAlt} className="w-6 h-6 object-contain" />
               <div className="flex flex-col text-left">
@@ -192,14 +245,13 @@ const CardNav = ({
             type="button"
             onClick={onCtaClick}
             className="card-nav-cta-button"
-            style={{ backgroundColor: buttonBgColor, color: buttonTextColor }}
           >
-            Contact Us
+            CONTACT US
           </button>
         </div>
 
         <div className="card-nav-content" aria-hidden={!isExpanded}>
-          {(items || []).slice(0, 3).map((item, idx) => (
+          {(items || []).map((item, idx) => (
             <div
               key={`${item.label}-${idx}`}
               className="nav-card"
@@ -213,7 +265,6 @@ const CardNav = ({
                     if (lnk.onClick) {
                       e.preventDefault()
                       lnk.onClick()
-                      toggleMenu()
                     } else if (lnk.targetId) {
                       e.preventDefault()
                       const element = document.getElementById(lnk.targetId)
@@ -221,17 +272,20 @@ const CardNav = ({
                         element.scrollIntoView({ behavior: 'smooth', block: 'start' })
                         window.history.pushState(null, '', '#' + lnk.targetId)
                       }
-                      toggleMenu()
                     }
+                    toggleMenu()
                   }
 
+                  const isExternal = lnk.href.startsWith('http');
                   return (
                     <a
                       key={`${lnk.label}-${i}`}
                       className="nav-card-link"
                       href={lnk.href}
-                      onClick={lnk.onClick || lnk.targetId ? handleClick : undefined}
+                      onClick={handleClick}
                       aria-label={lnk.ariaLabel}
+                      target={isExternal ? '_blank' : undefined}
+                      rel={isExternal ? 'noopener noreferrer' : undefined}
                     >
                       <ArrowUpRight className="nav-card-link-icon" size={13} aria-hidden="true" />
                       {lnk.label}

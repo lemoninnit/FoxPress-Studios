@@ -5,4 +5,12 @@ export interface Testimonial { quote: string; author: string; role: string; }
 export interface NewsPost { title: string; date: string; summary: string; image?: string; }
 export interface TeamMember { name: string; role: string; image?: string; }
 export interface Award { name: string; year: string; category: string; icon?: string; }
-export interface Project { title: string; category: string; }
+export interface Project {
+  title: string;
+  category: string;
+  youtubeId: string;
+  client?: string;
+  date?: string;
+  tech?: string;
+  description?: string;
+}

@@ -86,9 +86,9 @@
 }
 
 .card-nav-cta-button {
-  background-color: #c9a227;
-  color: #000000;
-  border: none;
+  background-color: rgba(201, 162, 39, 0.15);
+  color: #e5c043;
+  border: 1px solid rgba(201, 162, 39, 0.45);
   border-radius: calc(0.75rem - 0.35rem);
   padding: 0 1.2rem;
   height: 100%;
@@ -97,14 +97,18 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px 0 rgba(201, 162, 39, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
 }
 
 .card-nav-cta-button:hover {
-  background-color: #e5c043;
-  transform: scale(1.02);
+  background-color: rgba(201, 162, 39, 0.3);
+  transform: scale(1.03);
+  box-shadow: 0 0 15px rgba(201, 162, 39, 0.25);
 }
 
 .card-nav-content {
@@ -132,13 +136,15 @@
   flex: 1 1 0;
   min-width: 0;
   border-radius: calc(0.75rem - 0.2rem);
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   position: relative;
   display: flex;
   flex-direction: column;
   padding: 16px;
   gap: 12px;
   user-select: none;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .nav-card-label {
@@ -213,7 +219,7 @@
   }
 
   .hamburger-menu {
-    order: 2;
+    order: 3;
   }
 
   .logo-container {
@@ -223,7 +229,20 @@
   }
 
   .card-nav-cta-button {
-    display: none;
+    display: flex;
+    order: 2;
+    margin-left: auto;
+    margin-right: 12px;
+    height: 32px;
+    padding: 0 14px;
+    font-size: 10px;
+    border-radius: 9999px;
+    background-color: rgba(201, 162, 39, 0.15);
+    color: #e5c043;
+    border: 1px solid rgba(201, 162, 39, 0.45);
+    font-weight: 600;
+    align-items: center;
+    justify-content: center;
   }
 
   .card-nav-content {

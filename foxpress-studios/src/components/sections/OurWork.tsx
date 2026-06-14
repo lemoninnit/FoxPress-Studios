@@ -1,13 +1,20 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { m } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
-import { PROJECTS, PROJECT_IMAGES } from '../../constants'
+import { PROJECTS } from '../../constants'
 import { LiquidButton } from '../ui/liquid-glass-button'
 import ShapeGrid from '../ui/ShapeGrid'
 import BorderGlow from '../ui/BorderGlow'
 import ProjectModal from './ProjectModal'
 
-export default function OurWork() {
+interface OurWorkProps {
+  isPage?: boolean
+}
+
+export default function OurWork({ isPage = false }: OurWorkProps) {
+  const navigate = useNavigate()
+  const location = useLocation()
   const [projectModalOpen, setProjectModalOpen] = useState(false)
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(0)
   const [showAllProjects, setShowAllProjects] = useState(false)
@@ -17,6 +24,19 @@ export default function OurWork() {
     setShowAllProjects(showAll)
     setProjectModalOpen(true)
   }
+
+  useEffect(() => {
+    if (location.state?.openModal) {
+      const index = location.state.projectIndex ?? 0
+      setSelectedProjectIndex(index)
+      setShowAllProjects(true)
+      setProjectModalOpen(true)
+      // Clear location state to prevent repeating on refresh
+      navigate(location.pathname, { replace: true, state: {} })
+    }
+  }, [location.state, navigate, location.pathname])
+
+  const projectsToRender = isPage ? PROJECTS : PROJECTS.slice(0, 4)
 
   return (
     <section id="work" className="w-full bg-surface2 section-padding overflow-hidden relative">
@@ -51,19 +71,21 @@ export default function OurWork() {
             <div className="gold-divider"></div>
           </m.div>
 
-          <m.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7 }}
-            viewport={{ once: true }}
-          >
-            <LiquidButton 
-              onClick={() => handleOpenProject(0, true)}
-              className="border border-white/20 text-cream text-xs tracking-widest uppercase px-6 py-3 bg-white/5 backdrop-blur-md shadow-[0_8px_32px_0_rgba(255,255,255,0.05),inset_0_1px_1px_rgba(255,255,255,0.25)] hover:scale-[1.03] hover:brightness-115 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all duration-500 ease-out !h-auto !py-3 !rounded-sm flex items-center gap-2 cursor-pointer"
+          {!isPage && (
+            <m.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7 }}
+              viewport={{ once: true }}
             >
-              VIEW ALL PROJECTS
-            </LiquidButton>
-          </m.div>
+              <LiquidButton 
+                onClick={() => navigate('/work', { state: { openModal: true, projectIndex: 0 } })}
+                className="border border-white/20 text-cream text-xs tracking-widest uppercase px-6 py-3 bg-white/5 backdrop-blur-md shadow-[0_8px_32px_0_rgba(255,255,255,0.05),inset_0_1px_1px_rgba(255,255,255,0.25)] hover:scale-[1.03] hover:brightness-115 hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all duration-500 ease-out !h-auto !py-3 !rounded-sm flex items-center gap-2 cursor-pointer"
+              >
+                VIEW ALL PROJECTS
+              </LiquidButton>
+            </m.div>
+          )}
         </div>
 
         {/* Grid */}
@@ -77,7 +99,7 @@ export default function OurWork() {
           viewport={{ once: true }}
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
-          {PROJECTS.map((project, index) => (
+          {projectsToRender.map((project, index) => (
             <m.div
               key={project.title}
               variants={{
@@ -104,9 +126,15 @@ export default function OurWork() {
                 <div className="relative w-full h-full overflow-hidden">
                   {/* Image */}
                   <img
-                    src={PROJECT_IMAGES[index]}
+                    src={`https://img.youtube.com/vi/${project.youtubeId}/maxresdefault.jpg`}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      if (!target.src.includes('hqdefault.jpg')) {
+                        target.src = `https://img.youtube.com/vi/${project.youtubeId}/hqdefault.jpg`;
+                      }
+                    }}
                     alt={project.title}
-                    className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-[1200ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
+                    className="absolute inset-0 w-full h-full object-cover object-center scale-[1.15] transition-transform duration-[1200ms] [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.20]"
                     loading="lazy"
                   />
 

@@ -5,6 +5,8 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import heroBg from '../../assets/hero-bg.mp4'
 import hermesAwards from '../../assets/icons/hermes-awards.png'
+import viddyAwards from '../../assets/icons/viddy-awards.png'
+import viddyStamp from '../../assets/icons/viddy-stamp.png'
 import heroSectionImg from '../../assets/hero-section.png'
 import { LiquidButton } from '../ui/liquid-glass-button'
 
@@ -123,7 +125,7 @@ export default function Hero() {
               onClick={() => navigate('/work')}
               className="inline-flex items-center gap-2 px-6 py-4 border border-white/20 text-cream font-semibold text-sm tracking-widest uppercase bg-white/5 backdrop-blur-md shadow-[0_8px_32px_0_rgba(255,255,255,0.05),inset_0_1px_1px_rgba(255,255,255,0.3)] hover:scale-[1.03] hover:brightness-115 hover:shadow-[0_0_25px_rgba(255,255,255,0.25)] transition-all duration-500 ease-out w-full sm:w-auto justify-center !h-auto !py-4"
             >
-              OUR WORK
+              OUR WORKS
             </LiquidButton>
           </m.div>
         </div>
@@ -136,6 +138,8 @@ export default function Hero() {
         transition={{ duration: 1, delay: 1 }}
         className="hidden md:flex absolute bottom-10 right-6 md:right-10 items-center gap-4 z-10"
       >
+        <img src={viddyAwards} alt="Viddy Award" className="h-20 w-auto opacity-90 hover:opacity-100 transition-opacity" loading="eager" fetchPriority="low" decoding="async" />
+        <img src={viddyStamp} alt="Viddy Stamp" className="h-20 w-auto opacity-90 hover:opacity-100 transition-opacity" loading="eager" fetchPriority="low" decoding="async" />
         <img src={hermesAwards} alt="Hermes Award" className="h-20 w-auto opacity-90 hover:opacity-100 transition-opacity" loading="eager" fetchPriority="low" decoding="async" />
         <div className="border border-gold/40 px-4 py-3 text-center opacity-90 hover:opacity-100 transition-opacity flex flex-col justify-center items-center">
           <span className="text-white font-bold text-2xl leading-none">H</span>
